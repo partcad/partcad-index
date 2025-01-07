@@ -11,7 +11,7 @@ import:
     desc: A place to share CadQuery scripts, modules, tutorials and projects
     type: git
     url: https://github.com/openvmp/forked-cadquery-contrib
-    revision: hotfix/cqgi-tetrakaidecahedron
+    revision: hotfix/cqgi-hidden-errors
   build123d:
     desc: Examples of build123d scripts
     type: git

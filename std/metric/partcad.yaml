@@ -5,13 +5,13 @@ import:
   cqwarehouse:
     desc: Standard metric parts implemented in cq-warehouse
     type: git
-    url: https://github.com/openvmp/partcad-cqwarehouse/
+    url: https://github.com/partcad/partcad-cqwarehouse/
     relPath: metric.yaml
   m:
     desc: Standard M* interfaces
     type: git
-    url: https://github.com/openvmp/partcad-standard-metric-m/
+    url: https://github.com/partcad/partcad-standard-metric-m/
   nema:
     desc: Standard NEMA* interfaces
     type: git
-    url: https://github.com/openvmp/partcad-standard-metric-nema/
+    url: https://github.com/partcad/partcad-standard-metric-nema/

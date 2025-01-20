@@ -2,4 +2,4 @@ import:
   tootalltobby:
     desc: "Too Tall Tobby: practice models"
     type: git
-    url: https://github.com/openvmp/partcad-examples-competition-tootalltobby
+    url: https://github.com/partcad/partcad-examples-competition-tootalltoby

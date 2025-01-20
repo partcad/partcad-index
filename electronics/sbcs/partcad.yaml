@@ -5,12 +5,12 @@ import:
   intel:
     desc: Intel SBCs
     type: git
-    url: https://github.com/openvmp/partcad-electronics-sbcs-intel.git
+    url: https://github.com/partcad/partcad-electronics-sbcs-intel.git
   raspberrypi:
     desc: RaspberryPi
     type: git
-    url: https://github.com/openvmp/partcad-electronics-sbcs-raspberrypi.git
+    url: https://github.com/partcad/partcad-electronics-sbcs-raspberrypi.git
   arduino:
     desc: Arduino
     type: git
-    url: https://github.com/openvmp/partcad-electronics-sbcs-arduino.git
+    url: https://github.com/partcad/partcad-electronics-sbcs-arduino.git

@@ -6,6 +6,6 @@ import:
   partcad:
     desc: Examples that come with the PartCAD itself
     type: git
-    url: https://github.com/openvmp/partcad
+    url: https://github.com/partcad/partcad
     revision: main
     relPath: examples

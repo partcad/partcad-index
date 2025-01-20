@@ -2,4 +2,4 @@ import:
   ego:
     desc: EGO POWER+
     type: git
-    url: https://github.com/openvmp/partcad-electrical-ego.git
+    url: https://github.com/partcad/partcad-electrical-ego.git

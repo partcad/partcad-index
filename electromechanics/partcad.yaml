@@ -4,12 +4,12 @@ import:
   stepperonline:
     desc: STEPPERONLINE
     type: git
-    url: https://github.com/openvmp/partcad-electromechanics-stepperonline.git
+    url: https://github.com/partcad/partcad-electromechanics-stepperonline.git
   cloudray:
     desc: Cloudray
     type: git
-    url: https://github.com/openvmp/partcad-electromechanics-cloudray.git
+    url: https://github.com/partcad/partcad-electromechanics-cloudray.git
   towerpro:
     desc: TowerPro
     type: git
-    url: https://github.com/openvmp/partcad-electromechanics-towerpro.git
+    url: https://github.com/partcad/partcad-electromechanics-towerpro.git

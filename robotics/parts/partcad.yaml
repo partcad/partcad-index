@@ -2,8 +2,8 @@ import:
   gobilda:
     desc: GoBILDA
     type: git
-    url: https://github.com/openvmp/partcad-robotics-part-vendor-gobilda.git
+    url: https://github.com/partcad/partcad-robotics-part-vendor-gobilda.git
   dfrobot:
     desc: DFRobot
     type: git
-    url: https://github.com/openvmp/partcad-robotics-part-vendor-dfrobot.git
+    url: https://github.com/partcad/partcad-robotics-part-vendor-dfrobot.git

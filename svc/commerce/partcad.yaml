@@ -2,4 +2,8 @@ import:
   gobilda:
     desc: goBILDA online store.
     type: git
-    url: https://github.com/openvmp/svc-commerce-gobilda
+    url: https://github.com/partcad/svc-commerce-gobilda
+  homedepot:
+    desc: Home Depot online store.
+    type: git
+    url: https://github.com/partcad/svc-commerce-homedepot

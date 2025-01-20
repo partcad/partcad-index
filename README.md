@@ -63,5 +63,5 @@ to your own `partcad.yaml`:
 import:
     partcad-index:
         type: git
-        url: https://github.com/openvmp/partcad-index.git
+        url: https://github.com/partcad/partcad-index.git
 ```

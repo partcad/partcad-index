@@ -7,5 +7,5 @@ import:
     desc: Examples that come with the PartCAD itself
     type: git
     url: https://github.com/partcad/partcad
-    revision: main
+    revision: 0.7.128
     relPath: examples

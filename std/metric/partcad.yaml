@@ -7,6 +7,10 @@ import:
     type: git
     url: https://github.com/partcad/partcad-cqwarehouse/
     relPath: metric.yaml
+  bosl2:
+    desc: Parametric BOSL2 shapes, gears, threading and hardware (Belfry OpenSCAD Library v2)
+    type: git
+    url: https://github.com/partcad/partcad-bosl2/
   m:
     desc: Standard M* interfaces
     type: git

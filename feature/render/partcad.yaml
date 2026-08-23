@@ -1,0 +1,7 @@
+import:
+  draftwright:
+    desc: Technical drawings (PDF, SVG, DXF) produced by draftwright.
+    type: git
+    url: https://github.com/partcad/partcad-render-draftwright
+    web: https://github.com/pzfreo/draftwright
+    poc: pzfreo@gmail.com

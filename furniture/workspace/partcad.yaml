@@ -1,4 +1,4 @@
-import:
+dependencies:
   basic:
     desc: Basic furniture for low demand workspace environments
     type: git

@@ -1,4 +1,4 @@
-import:
+dependencies:
   tootalltobby:
     desc: "Too Tall Tobby: practice models"
     type: git

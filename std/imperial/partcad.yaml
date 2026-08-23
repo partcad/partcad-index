@@ -1,4 +1,4 @@
-import:
+dependencies:
   cqwarehouse:
     desc: Standard imperial parts implemented in cq-warehouse
     type: git

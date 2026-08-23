@@ -13,7 +13,7 @@ The part repositories maintained by the same party/owner are expected
 to be placed in the same file.
 
 ```yaml
-import:
+dependencies:
     <package-name>:
         desc: <(optional) textual description>
         type: <git|tar|local>
@@ -35,7 +35,7 @@ Here is an example of making a reference to an external git repository. It shows
 
 ```yaml
 # robotics/multimodal/partcad.yaml
-import:
+dependencies:
     OpenVMP-custom-parts:
         desc: Custom parts for OpenVMP robots
         type: git
@@ -60,7 +60,7 @@ It can be referenced in your PartCAD package by adding the below
 to your own `partcad.yaml`:
 
 ```yaml
-import:
+dependencies:
     partcad-index:
         type: git
         url: https://github.com/partcad/partcad-index.git

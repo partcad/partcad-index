@@ -1,6 +1,6 @@
 cover:
   package: stepperonline
-import:
+dependencies:
   stepperonline:
     desc: STEPPERONLINE
     type: git

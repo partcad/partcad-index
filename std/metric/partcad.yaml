@@ -1,7 +1,7 @@
 cover:
   package: cqwarehouse
 
-import:
+dependencies:
   cqwarehouse:
     desc: Standard metric parts implemented in cq-warehouse
     type: git

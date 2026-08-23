@@ -1,4 +1,4 @@
-import:
+dependencies:
   gridfinity:
     desc: "Gridfinity system created by Zach Freedman"
     web: https://www.youtube.com/c/ZackFreedman

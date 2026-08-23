@@ -1,4 +1,4 @@
-partcad: ">=0.6.20"
+partcad: ">=0.8.0"
 name: /pub
 
 # Before adding your own packages, browse sub-folders to find the most appropriate parent package.

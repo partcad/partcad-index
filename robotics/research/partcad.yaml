@@ -1,4 +1,4 @@
-import:
+dependencies:
   cloudgripper:
     desc: CloudGripper
     type: git

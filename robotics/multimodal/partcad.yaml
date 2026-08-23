@@ -1,4 +1,4 @@
-import:
+dependencies:
   openvmp:
     desc: OpenVMP robots
     type: git

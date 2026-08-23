@@ -1,4 +1,4 @@
-import:
+dependencies:
   gobilda:
     desc: goBILDA online store.
     type: git

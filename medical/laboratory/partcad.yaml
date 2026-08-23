@@ -1,6 +1,6 @@
 partcad: ">=0.6.33"
 
-import:
+dependencies:
   4tvc-microlab:
     desc: Four Thieves Vinegar Collective - Harm Reduction for the Living
     type: git

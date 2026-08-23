@@ -1,7 +1,7 @@
 cover:
   package: intel
 
-import:
+dependencies:
   intel:
     desc: Intel SBCs
     type: git

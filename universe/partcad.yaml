@@ -1,0 +1,12 @@
+desc: |
+  Packages describing the "universe" of real-world product ecosystems.
+cover:
+  package: lego
+
+import:
+  # The LDraw parts library (LEGO-compatible parts) exposed as parametric
+  # PartCAD parts. Published at //pub/universe/lego/ldraw.
+  lego:
+    desc: LEGO parts from the LDraw library, as parametric PartCAD parts
+    type: git
+    url: https://github.com/partcad/partcad-ldraw/

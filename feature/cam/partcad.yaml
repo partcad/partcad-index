@@ -1,0 +1,7 @@
+import:
+  gscrib:
+    desc: G-code for FDM 3D printers, generated from PartCAD parts by gscrib.
+    type: git
+    url: https://github.com/partcad/partcad-cam-gscrib
+    web: https://github.com/joansalasoler/gscrib
+    poc: joansala@gmail.com

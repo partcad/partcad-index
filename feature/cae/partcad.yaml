@@ -1,0 +1,6 @@
+import:
+  calculix:
+    desc: Finite element and fluid dynamics analysis, by CalculiX.
+    type: git
+    url: https://github.com/partcad/partcad-cae-calculix
+    web: https://www.calculix.de/

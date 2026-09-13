@@ -1,4 +1,4 @@
-import:
+dependencies:
   draftwright:
     desc: Technical drawings (PDF, SVG, DXF) produced by draftwright.
     type: git

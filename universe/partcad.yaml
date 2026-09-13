@@ -3,7 +3,7 @@ desc: |
 cover:
   package: lego
 
-import:
+dependencies:
   # The LDraw parts library (LEGO-compatible parts) exposed as parametric
   # PartCAD parts. Published at //pub/universe/lego/ldraw.
   lego:

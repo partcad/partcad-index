@@ -1,4 +1,4 @@
-import:
+dependencies:
   calculix:
     desc: Finite element and fluid dynamics analysis, by CalculiX.
     type: git

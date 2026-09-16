@@ -1,0 +1,649 @@
+# The package path this catalogue is published at, so that standalone
+# development uses the very same addresses its consumers will.
+name: //pub/std/manufacturing/material/metal
+
+# 'materials:' is only read by the PartCAD that has the material object type;
+# before it, this file parsed and every material in it was silently ignored.
+partcad: ">=0.8.46"
+
+desc: Standard metals and alloys, as PartCAD materials.
+
+# Three conventions this file keeps, so that a reader does not have to work them
+# out from the entries:
+#
+# * The name is '<metal>-<designation>[-<temper>]' and never the bare
+#   designation. '5052:' is not a name in YAML at all - it is the integer 5052,
+#   which is not what a part's 'material' parameter says and not what the
+#   material name pattern accepts. The temper is part of the name because it is
+#   part of what was ordered: 6061-T6 and 6061-O are the same alloy and not the
+#   same material to build out of.
+#
+# * 'density' is g/mm^3, which is what PartCAD computes a mass in. A datasheet
+#   quotes g/cm^3, 1000x larger: 5052 at 2.68 g/cm^3 is 0.00268 here. Density is
+#   a property of the alloy rather than of the temper, so it is the one fact
+#   below that does not move when the temper does.
+#
+# * 'mu' is a typical *dry, unlubricated, self-mated* sliding coefficient - the
+#   pair the friction tables tabulate for a metal, and the single number every
+#   simulator takes for a surface. It is stated only for aluminium and for the
+#   steels, where those tables agree with each other; where they do not, it is
+#   left out rather than invented, and a part made of such a material gets the
+#   simulator's default exactly as it did before anybody catalogued it.
+materials:
+  #
+  # Aluminium
+  #
+  al-5052-h32:
+    formal: 5052-H32
+    full: Aluminium alloy 5052-H32
+    desc: |
+      The sheet-metal aluminium. An Al-Mg alloy that is not heat treatable and
+      gets its strength from work hardening, which is what makes it bend
+      without cracking on a press brake and hold the bend afterwards: folded
+      chassis, brackets, enclosures and battery trays are 5052 far more often
+      than anything else. It welds, it resists salt water better than the
+      heat-treatable alloys, and it has the best fatigue life of the common
+      sheet grades - but it does not machine cleanly and cannot be strengthened
+      by heat treatment afterwards.
+    url: https://en.wikipedia.org/wiki/5052_aluminium_alloy
+    density: 0.00268 # g/mm^3
+    mu: 1.05
+    tags:
+      - metal
+      - aluminium
+      - sheet-metal
+      - formable
+      - weldable
+      - corrosion-resistant
+      - fatigue-resistant
+  al-6061-t6:
+    formal: 6061-T6
+    full: Aluminium alloy 6061-T6
+    desc: |
+      The general-purpose structural aluminium: plate, bar and extrusion for
+      machined robot links, mounting plates, heat sinks and airframe fittings.
+      Heat treatable, weldable, and it machines and anodises well, which is why
+      it is the default for anything cut from solid. Welding anneals the heat
+      affected zone back towards the annealed strength, so a welded frame is
+      not a T6 frame unless it is re-treated.
+    url: https://en.wikipedia.org/wiki/6061_aluminium_alloy
+    density: 0.0027
+    mu: 1.05
+    tags:
+      - metal
+      - aluminium
+      - machinable
+      - weldable
+      - heat-treatable
+      - structural
+  al-6063-t5:
+    formal: 6063-T5
+    full: Aluminium alloy 6063-T5
+    desc: |
+      The extrusion alloy. It flows through a die into thin, complex and
+      accurate sections and takes a clean anodised finish, at some cost in
+      strength against 6061 - so it is what T-slot framing, enclosure profiles,
+      rails and heat-sink fins are made of. Robot cells and test rigs are
+      largely built out of it without anybody machining anything.
+    url: https://en.wikipedia.org/wiki/6063_aluminium_alloy
+    density: 0.0027
+    mu: 1.05
+    tags:
+      - metal
+      - aluminium
+      - extrusion
+      - framing
+      - anodising
+  al-6082-t6:
+    formal: 6082-T6
+    full: Aluminium alloy 6082-T6
+    desc: |
+      The European structural alloy, and what a supplier there offers where a
+      US drawing asks for 6061: the same Al-Mg-Si family, a little stronger,
+      slightly less obliging to machine and anodise. Plate and extrusion for
+      frames, brackets and transport structures.
+    url: https://en.wikipedia.org/wiki/6082_aluminium_alloy
+    density: 0.0027
+    mu: 1.05
+    tags:
+      - metal
+      - aluminium
+      - structural
+      - weldable
+      - heat-treatable
+  al-7075-t6:
+    formal: 7075-T6
+    full: Aluminium alloy 7075-T6
+    desc: |
+      The strong one: an Al-Zn alloy that reaches the strength of a mild steel
+      at a third of the density, and the reason aircraft fittings, wing spars,
+      landing-gear components, competition suspension uprights and highly
+      loaded robot arms are cut from it. The price is that it is effectively
+      not weldable, is more prone to stress-corrosion cracking than the 5000
+      and 6000 series, and costs several times as much.
+    url: https://en.wikipedia.org/wiki/7075_aluminium_alloy
+    density: 0.00281
+    mu: 1.05
+    tags:
+      - metal
+      - aluminium
+      - aviation
+      - high-strength
+      - machinable
+  al-2024-t3:
+    formal: 2024-T3
+    full: Aluminium alloy 2024-T3
+    desc: |
+      The riveted-airframe alloy. An Al-Cu alloy with the fatigue and
+      damage-tolerance behaviour a pressurised fuselage skin needs, which is
+      what has kept it in aircraft structure for eighty years. Its corrosion
+      resistance is poor, so sheet is normally bought Alclad - rolled with a
+      thin layer of pure aluminium on each face - and it is riveted rather than
+      welded.
+    url: https://en.wikipedia.org/wiki/2024_aluminium_alloy
+    density: 0.00278
+    mu: 1.05
+    tags:
+      - metal
+      - aluminium
+      - aviation
+      - fatigue-resistant
+      - high-strength
+  al-5083-h116:
+    formal: 5083-H116
+    full: Aluminium alloy 5083-H116
+    desc: |
+      The strongest of the non-heat-treatable alloys, and the one that keeps
+      its strength where it is welded. Marine hulls, pressure vessels,
+      cryogenic tanks and armour plate; in vehicles and robots it turns up
+      wherever a welded aluminium structure has to be as strong as the sheet it
+      was made from.
+    url: https://en.wikipedia.org/wiki/5083_aluminium_alloy
+    density: 0.00266
+    mu: 1.05
+    tags:
+      - metal
+      - aluminium
+      - weldable
+      - corrosion-resistant
+      - marine
+      - cryogenic
+  al-a356-t6:
+    formal: A356-T6
+    full: Aluminium casting alloy A356-T6
+    desc: |
+      The structural casting alloy: an Al-Si-Mg alloy that fills a mould well
+      and, unlike the die-casting alloys, can be heat treated to a useful
+      strength and ductility afterwards. Cast road wheels, suspension knuckles,
+      gearbox and pump housings, and aerospace castings that have to be
+      radiographed and certified.
+    url: https://en.wikipedia.org/wiki/Aluminium_alloy
+    density: 0.00268
+    mu: 1.05
+    tags:
+      - metal
+      - aluminium
+      - cast
+      - automotive
+      - heat-treatable
+  al-a380:
+    formal: A380
+    full: Aluminium die-casting alloy A380
+    desc: |
+      What a high-pressure die-cast aluminium part is made of unless somebody
+      says otherwise: engine and gearbox housings, brackets, electronics
+      enclosures, motor end bells. It casts thin walls at speed and conducts
+      heat away, at the cost of ductility - a die casting is not a forging, and
+      it is not usefully weldable or heat treatable because of the gas trapped
+      during the shot.
+    url: https://en.wikipedia.org/wiki/Aluminium_alloy
+    density: 0.00271
+    mu: 1.05
+    tags:
+      - metal
+      - aluminium
+      - die-cast
+      - automotive
+      - thermally-conductive
+
+  #
+  # Carbon and alloy steel
+  #
+  steel-1018:
+    formal: AISI 1018
+    full: Low-carbon steel AISI 1018
+    desc: |
+      Mild steel: cheap, weldable, forgiving, and the default for shafts,
+      spacers, jigs, weldments and anything machined where strength is not the
+      constraint. Too soft to hold a bearing surface as it is, so it is case
+      hardened when it has to.
+    url: https://en.wikipedia.org/wiki/Carbon_steel
+    density: 0.00787
+    mu: 0.6
+    tags:
+      - metal
+      - steel
+      - weldable
+      - machinable
+      - low-cost
+  steel-1045:
+    formal: AISI 1045
+    full: Medium-carbon steel AISI 1045
+    desc: |
+      Medium-carbon steel that can be through hardened, which is what puts it
+      in shafts, axles, gears, sprockets and hydraulic rod. Stronger than 1018
+      as supplied and noticeably less pleasant to weld.
+    url: https://en.wikipedia.org/wiki/Carbon_steel
+    density: 0.00787
+    mu: 0.6
+    tags:
+      - metal
+      - steel
+      - heat-treatable
+      - wear-resistant
+  steel-a36:
+    formal: ASTM A36
+    full: Structural steel ASTM A36
+    desc: |
+      The structural plate and section steel: frames, base plates, weldments,
+      machine bases and anything fabricated out of hot-rolled stock. Specified
+      by its minimum yield rather than by its composition, which is why it is a
+      grade rather than an alloy.
+    url: https://en.wikipedia.org/wiki/A36_steel
+    density: 0.00785
+    mu: 0.6
+    tags:
+      - metal
+      - steel
+      - structural
+      - weldable
+      - low-cost
+  steel-4130:
+    formal: AISI 4130
+    full: Chromium-molybdenum steel AISI 4130
+    desc: |
+      Chromoly: the tube an aircraft fuselage, a roll cage, a motorcycle frame
+      or a race-car chassis is welded from. High strength for its weight, and -
+      unusually for a strong alloy steel - it TIG welds thin wall without
+      needing heat treatment afterwards for most airframe work.
+    url: https://en.wikipedia.org/wiki/41xx_steel
+    density: 0.00785
+    mu: 0.6
+    tags:
+      - metal
+      - steel
+      - aviation
+      - automotive
+      - high-strength
+      - weldable
+  steel-4140:
+    formal: AISI 4140
+    full: Chromium-molybdenum steel AISI 4140
+    desc: |
+      The through-hardening alloy steel of machine building: gear blanks,
+      drive and output shafts, suspension and steering components, tooling and
+      dies. Bought pre-hardened and tempered as often as it is heat treated
+      after machining.
+    url: https://en.wikipedia.org/wiki/41xx_steel
+    density: 0.00785
+    mu: 0.6
+    tags:
+      - metal
+      - steel
+      - heat-treatable
+      - high-strength
+      - automotive
+  steel-4340:
+    formal: AISI 4340
+    full: Nickel-chromium-molybdenum steel AISI 4340
+    desc: |
+      Where 4140 is not tough enough: landing-gear legs, aircraft and
+      helicopter shafts, torsion bars, highly loaded gears. Nickel buys
+      hardenability deep into a thick section and toughness at high strength,
+      and it is one of the alloys hydrogen embrittlement rules are written for.
+    url: https://en.wikipedia.org/wiki/SAE_steel_grades
+    density: 0.00785
+    mu: 0.6
+    tags:
+      - metal
+      - steel
+      - aviation
+      - high-strength
+      - tough
+  steel-dp600:
+    formal: DP600
+    full: Dual-phase advanced high-strength steel DP600
+    desc: |
+      Body-in-white steel: soft ferrite with hard martensite islands in it, so
+      that it stamps like a mild steel and work hardens into something much
+      stronger in the panel. Rails, cross members and reinforcements, where the
+      structure has to absorb a crash rather than resist it.
+    url: https://en.wikipedia.org/wiki/Dual-phase_steel
+    density: 0.00785
+    mu: 0.6
+    tags:
+      - metal
+      - steel
+      - automotive
+      - sheet-metal
+      - formable
+      - crashworthy
+  steel-22mnb5:
+    formal: 22MnB5
+    full: Boron steel 22MnB5, press hardened
+    desc: |
+      The hot-stamped boron steel of the passenger safety cell: formed at
+      around 900 C and quenched in the die, which leaves a fully martensitic
+      part several times stronger than the blank that went in. B-pillars, door
+      intrusion beams, bumper beams and roof rails. It cannot be cold formed or
+      welded in the field to any useful effect, which is why rescue tooling
+      cares which cars have it.
+    url: https://en.wikipedia.org/wiki/Boron_steel
+    density: 0.00785
+    mu: 0.6
+    tags:
+      - metal
+      - steel
+      - automotive
+      - high-strength
+      - crashworthy
+
+  #
+  # Stainless steel
+  #
+  ss-303:
+    formal: AISI 303
+    full: Austenitic stainless steel AISI 303
+    desc: |
+      304 with sulphur added so that it machines: the stainless for turned
+      shafts, fittings, spacers and screws made in quantity. The sulphides that
+      break the chip also start pits, so it corrodes more readily than 304 and
+      is not meant to be welded.
+    url: https://en.wikipedia.org/wiki/SAE_steel_grades
+    density: 0.008
+    mu: 0.7
+    tags:
+      - metal
+      - stainless
+      - machinable
+      - corrosion-resistant
+      - non-magnetic
+  ss-304:
+    formal: AISI 304
+    full: Austenitic stainless steel AISI 304
+    desc: |
+      The general-purpose stainless: fasteners, sheet, tube, frames, food and
+      laboratory equipment, and anything that has to stay clean or stay
+      outdoors. Non-magnetic as annealed, though cold work raises a little
+      ferromagnetism in it.
+    url: https://en.wikipedia.org/wiki/SAE_304_stainless_steel
+    density: 0.008
+    mu: 0.7
+    tags:
+      - metal
+      - stainless
+      - corrosion-resistant
+      - weldable
+      - hygienic
+  ss-316l:
+    formal: AISI 316L
+    full: Austenitic stainless steel AISI 316L
+    desc: |
+      304 with molybdenum, which is what it takes to hold up against chlorides:
+      salt water, de-icing salt, chemical plant and the inside of a body. The
+      L is the low-carbon variant that can be welded without sensitising the
+      heat affected zone, and it is the most common stainless powder for
+      printed metal parts.
+    url: https://en.wikipedia.org/wiki/SAE_316L_stainless_steel
+    density: 0.008
+    mu: 0.7
+    tags:
+      - metal
+      - stainless
+      - corrosion-resistant
+      - marine
+      - weldable
+      - medical
+  ss-17-4ph:
+    formal: 17-4 PH
+    full: Precipitation-hardening stainless steel 17-4 PH
+    desc: |
+      Stainless with the strength of an alloy steel, reached by a single low
+      temperature ageing treatment that distorts almost nothing - so a part can
+      be machined to size soft and hardened afterwards. Aerospace fittings,
+      valve and pump shafts, injection mould inserts, and a common printed
+      metal alloy.
+    url: https://en.wikipedia.org/wiki/Precipitation_hardening
+    density: 0.0078
+    mu: 0.6
+    tags:
+      - metal
+      - stainless
+      - aviation
+      - high-strength
+      - heat-treatable
+
+  #
+  # Titanium
+  #
+  ti-6al-4v:
+    formal: Ti-6Al-4V
+    full: Titanium alloy Ti-6Al-4V (Grade 5)
+    desc: |
+      Half the world's titanium, and the reason the metal has a reputation:
+      the strength of an alloy steel at 60% of the density, immune to most
+      corrosion, and holding both up to about 400 C. Airframe and engine
+      structure, fasteners, rocket hardware, medical implants, and the printed
+      bracket that replaced a machined assembly. It is expensive, it galls
+      against itself, and it is unforgiving to machine - slow, sharp, flooded,
+      and never rubbing.
+    url: https://en.wikipedia.org/wiki/Ti-6Al-4V
+    density: 0.00443
+    tags:
+      - metal
+      - titanium
+      - aviation
+      - high-strength
+      - lightweight
+      - corrosion-resistant
+      - biocompatible
+  ti-grade-2:
+    formal: Ti Grade 2
+    full: Commercially pure titanium, Grade 2
+    desc: |
+      Unalloyed titanium: much weaker than Grade 5 and much easier to form and
+      weld, with the same corrosion immunity. Sheet, tube, heat exchangers,
+      chemical and marine hardware, and surgical instruments.
+    url: https://en.wikipedia.org/wiki/Titanium
+    density: 0.00451
+    tags:
+      - metal
+      - titanium
+      - formable
+      - weldable
+      - corrosion-resistant
+      - biocompatible
+
+  #
+  # Magnesium
+  #
+  mg-az31b:
+    formal: AZ31B
+    full: Magnesium alloy AZ31B
+    desc: |
+      The lightest structural metal in common use - a third lighter than
+      aluminium - as wrought sheet, plate and extrusion. Instrument and camera
+      housings, drone and exoskeleton frames, aircraft interior parts. It
+      damps vibration well, corrodes readily unless coated, and burns as swarf.
+    url: https://en.wikipedia.org/wiki/Magnesium_alloy
+    density: 0.00177
+    tags:
+      - metal
+      - magnesium
+      - lightweight
+      - damping
+      - aviation
+  mg-az91d:
+    formal: AZ91D
+    full: Magnesium die-casting alloy AZ91D
+    desc: |
+      The magnesium die-casting alloy: steering-wheel armatures, seat frames,
+      transmission and cam covers, laptop and camera bodies. High purity, so
+      it corrodes far less than the older magnesium alloys it replaced, and it
+      casts thinner walls than aluminium can.
+    url: https://en.wikipedia.org/wiki/Magnesium_alloy
+    density: 0.00181
+    tags:
+      - metal
+      - magnesium
+      - die-cast
+      - automotive
+      - lightweight
+
+  #
+  # Copper and copper alloys
+  #
+  cu-c110:
+    formal: C110
+    full: Electrolytic tough pitch copper C110
+    desc: |
+      Copper as an engineering material rather than as an alloy: busbars,
+      terminals, motor windings, heat spreaders, cold plates and induction
+      coils. Nothing affordable conducts electricity or heat better. Soft,
+      heavy, and it work hardens as it is bent.
+    url: https://en.wikipedia.org/wiki/Copper
+    density: 0.00889
+    tags:
+      - metal
+      - copper
+      - conductive
+      - thermally-conductive
+  brass-c360:
+    formal: C360
+    full: Free-machining brass C360
+    desc: |
+      The brass a lathe likes: hydraulic and pneumatic fittings, valve bodies,
+      electrical connectors, bushings and instrument parts, cut at speeds no
+      steel allows. Corrosion resistant, non-sparking, and lead-free
+      substitutes are displacing it where drinking water or RoHS is involved.
+    url: https://en.wikipedia.org/wiki/Brass
+    density: 0.0085
+    tags:
+      - metal
+      - copper
+      - machinable
+      - corrosion-resistant
+      - non-sparking
+  bronze-c932:
+    formal: C932
+    full: Bearing bronze C932 (SAE 660)
+    desc: |
+      Bearing bronze: the sleeve bearings, thrust washers and worm wheels that
+      run against a steel shaft without a rolling element in between. It
+      tolerates shock, dirt and marginal lubrication, and it is what a
+      sintered, oil-impregnated bushing is made of.
+    url: https://en.wikipedia.org/wiki/Bronze
+    density: 0.00893
+    tags:
+      - metal
+      - copper
+      - bearing
+      - wear-resistant
+      - machinable
+
+  #
+  # Nickel superalloys
+  #
+  inconel-718:
+    formal: Inconel 718
+    full: Nickel-chromium superalloy Inconel 718
+    desc: |
+      The workhorse superalloy of a gas turbine: discs, casings, shafts,
+      fasteners and rocket-engine parts that have to keep their strength to
+      about 700 C. It is age hardened, weldable by superalloy standards, and
+      notoriously hard on cutting tools, which is one reason so much of it is
+      now printed.
+    url: https://en.wikipedia.org/wiki/Inconel
+    density: 0.00819
+    tags:
+      - metal
+      - nickel
+      - aviation
+      - high-temperature
+      - high-strength
+  inconel-625:
+    formal: Inconel 625
+    full: Nickel-chromium superalloy Inconel 625
+    desc: |
+      Solid-solution strengthened rather than aged, so it is formed and welded
+      more easily than 718 and gives up some strength for it. Exhaust systems,
+      bellows, expansion joints, seawater and chemical hardware, and weld
+      overlay on things made of something cheaper.
+    url: https://en.wikipedia.org/wiki/Inconel
+    density: 0.00844
+    tags:
+      - metal
+      - nickel
+      - high-temperature
+      - corrosion-resistant
+      - weldable
+
+  #
+  # Cast iron
+  #
+  cast-iron-gray:
+    formal: Gray iron
+    full: Gray cast iron
+    desc: |
+      Iron with its carbon as graphite flakes, which makes it brittle in
+      tension, excellent at damping vibration and easy to machine. Engine
+      blocks and heads, brake discs and drums, flywheels, machine-tool beds and
+      robot bases: the flakes conduct heat out of a brake disc and swallow the
+      chatter a machine frame would otherwise ring with.
+    url: https://en.wikipedia.org/wiki/Gray_iron
+    density: 0.00715
+    tags:
+      - metal
+      - cast-iron
+      - cast
+      - automotive
+      - damping
+      - machinable
+  cast-iron-ductile:
+    formal: Ductile iron
+    full: Ductile (nodular) cast iron
+    desc: |
+      The same iron with the graphite balled up instead of flaked, which gives
+      back most of the ductility and lets a casting be loaded in tension:
+      crankshafts, steering knuckles, differential and suspension components,
+      gearbox housings, pipe. Often the cheaper answer where a steel forging
+      would otherwise be specified.
+    url: https://en.wikipedia.org/wiki/Ductile_iron
+    density: 0.0071
+    tags:
+      - metal
+      - cast-iron
+      - cast
+      - automotive
+      - tough
+
+  #
+  # Zinc
+  #
+  zamak-3:
+    formal: Zamak 3
+    full: Zinc die-casting alloy Zamak 3
+    desc: |
+      The default zinc die-casting alloy: gearbox and connector housings,
+      latches, brackets, interior hardware and toys. It casts at a low enough
+      temperature to make dies last, holds tight tolerances and fine detail,
+      and takes plating well - at four times the density of aluminium, which
+      is why it stays out of anything that has to be light.
+    url: https://en.wikipedia.org/wiki/Zamak
+    density: 0.0066
+    tags:
+      - metal
+      - zinc
+      - die-cast
+      - platable
+      - low-cost

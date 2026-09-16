@@ -9,13 +9,7 @@ dependencies:
     desc: Standard polymers (thermoplastics, composites, elastomers)
     type: git
     url: https://github.com/partcad/std-manufacturing-materials-plastic
-
-# 'metal' is the sibling family of the above, and it is a sub-directory here
-# rather than a dependency on a repository of its own only because there is no
-# such repository yet. A sub-directory holding a 'partcad.yaml' is a package of
-# this index like any other, so the catalogue already answers to
-# //pub/std/manufacturing/material/metal - which is the same address it answers
-# to the day it moves out into
-# https://github.com/partcad/std-manufacturing-materials-metal. Moving it is
-# then one 'dependencies:' entry beside 'plastic' and a deleted directory, and
-# nothing that names a material changes.
+  metal:
+    desc: Standard metals and alloys (aluminium, steel, stainless, titanium, magnesium, copper, nickel)
+    type: git
+    url: https://github.com/partcad/std-manufacturing-materials-metals

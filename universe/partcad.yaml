@@ -10,3 +10,11 @@ dependencies:
     desc: LEGO parts from the LDraw library, as parametric PartCAD parts
     type: git
     url: https://github.com/partcad/partcad-ldraw/
+    # A plugin's answers are cached on disk under a key made from the plugin
+    # reference and this number, and nothing else - the cache cannot tell that
+    # the plugin's code has moved on. partcad-ldraw now serves its parts Z-up
+    # rather than Y-up (partcad/partcad-ldraw#17), which changes every part's
+    # geometry and every port's coordinates, so without this bump an existing
+    # checkout would go on being served the Y-up answers it cached and the
+    # change would reach nobody.
+    cacheVersion: 1

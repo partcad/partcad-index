@@ -49,6 +49,10 @@ jobs:
           reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem" /v LongPathsEnabled /t REG_DWORD /d 1 /f
 
       - uses: actions/checkout@v7
+        with:
+          # 'pip install' and the packages under test run third-party code;
+          # nothing here needs the token.
+          persist-credentials: false
 
       - uses: conda-incubator/setup-miniconda@v4
         with:

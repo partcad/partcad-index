@@ -1,0 +1,22 @@
+# Checks every new commit on 'main' -- what a default clone of the index gets --
+# against the PartCAD release users get from PyPI.
+name: Main
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pub:
+    name: PartCAD from PyPI
+    uses: ./.github/workflows/pub.yml
+    with:
+      partcad: "partcad"

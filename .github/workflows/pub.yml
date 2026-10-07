@@ -1,0 +1,144 @@
+# Runs 'pc test -r' and 'pc render -r' over the whole index (//pub) with the
+# PartCAD named by the caller. Called by "devel.yml" (pull requests, PartCAD
+# from its 'devel' branch) and "main.yml" (pushes, PartCAD from PyPI).
+#
+# The matrix is the one PartCAD's own CI runs "Repo //pub" on at its "deep"
+# level: OSES_SLIM x PYTHONS_SANDBOX in partcad/partcad's
+# ".github/workflows/test.yml". Keep the two in step.
+#
+# The environment mirrors partcad/partcad's ".github/actions/setup-all" and
+# ".github/actions/setup-test", minus what only PartCAD's own test suite needs:
+# a conda-forge-only Miniforge (PartCAD builds its sandboxes with conda), and
+# OpenSCAD on the host.
+name: Test //pub
+
+on:
+  workflow_call:
+    inputs:
+      partcad:
+        description: "pip requirement that installs PartCAD"
+        type: string
+        required: true
+
+permissions:
+  contents: read
+
+env:
+  PC_TELEMETRY_ENV: test
+  PC_TELEMETRY_PERFORMANCE: false
+
+jobs:
+  pub:
+    name: ${{ matrix.os }}, Python ${{ matrix.python-version }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["ubuntu-latest", "windows-latest", "macos-latest"]
+        python-version: ["3.11", "3.14"]
+    runs-on: ${{ matrix.os }}
+    # PartCAD gives 'test' alone 60 minutes here; this job renders too.
+    timeout-minutes: 120
+    defaults:
+      run:
+        shell: bash -el {0}
+    steps:
+      - name: Enable long paths (Windows)
+        if: runner.os == 'Windows'
+        shell: powershell
+        run: |
+          reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem" /v LongPathsEnabled /t REG_DWORD /d 1 /f
+
+      - uses: actions/checkout@v7
+        with:
+          # 'pip install' and the packages under test run third-party code;
+          # nothing here needs the token.
+          persist-credentials: false
+
+      - uses: conda-incubator/setup-miniconda@v4
+        with:
+          miniforge-version: 26.3.2-3
+          # conda-forge only, as in PartCAD's CI: mixing in Anaconda's
+          # 'defaults' picks ABI-incompatible builds.
+          channels: conda-forge
+          python-version: ${{ matrix.python-version }}
+          activate-environment: partcad
+          auto-activate-base: false
+
+      - name: Install OpenSCAD (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openscad
+
+      - name: Install OpenSCAD (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          # The "openscad" cask is disabled; the snapshot one is what PartCAD
+          # uses. It does not necessarily put a binary on PATH.
+          if ! command -v openscad >/dev/null 2>&1; then
+            HOMEBREW_NO_AUTO_UPDATE=1 brew install --cask openscad@snapshot
+          fi
+          if ! command -v openscad >/dev/null 2>&1; then
+            binary="$(find /Applications -maxdepth 4 -path '*/Contents/MacOS/*' \
+              -type f -perm -111 -iname 'openscad' 2>/dev/null | head -n 1)"
+            if [ -z "${binary}" ]; then
+              echo "::error::openscad@snapshot installed but no OpenSCAD executable was found under /Applications"
+              exit 1
+            fi
+            mkdir -p "${HOME}/.local/bin"
+            ln -sf "${binary}" "${HOME}/.local/bin/openscad"
+            echo "${HOME}/.local/bin" >> "${GITHUB_PATH}"
+            export PATH="${HOME}/.local/bin:${PATH}"
+          fi
+          openscad --version
+
+      - name: Install OpenSCAD (Windows)
+        if: runner.os == 'Windows'
+        shell: powershell
+        working-directory: ${{ runner.temp }}
+        run: |
+          curl.exe -fsSL -o openscad.zip https://files.openscad.org/OpenSCAD-2021.01-x86-64.zip
+          curl.exe -fsSL -o openscad.zip.sha256 https://files.openscad.org/OpenSCAD-2021.01-x86-64.zip.sha256
+          $expected = ((Get-Content openscad.zip.sha256) -split '\s+')[0]
+          $actual = (Get-FileHash -Algorithm SHA256 openscad.zip).Hash
+          if ($expected -ne $actual) {
+            Write-Error "SHA256 checksum verification failed"
+            exit 1
+          }
+          Expand-Archive -Force openscad.zip -DestinationPath openscad
+          Add-Content $env:GITHUB_PATH "$env:RUNNER_TEMP\openscad\openscad-2021.01"
+
+      - name: Install PartCAD
+        id: install
+        env:
+          PARTCAD: ${{ inputs.partcad }}
+        run: |
+          # PartCAD's wheel build refuses a checkout whose symlinks Git for
+          # Windows left as text files, which is what a 'git+' install gets
+          # without this.
+          git config --global core.symlinks true
+          python -m pip install --upgrade pip
+          python -m pip install --upgrade "${PARTCAD}"
+          pc --no-ansi version
+          pc --no-ansi healthcheck --fix
+
+      - name: pc test -r
+        run: pc --no-ansi --threads-max 4 test -r
+
+      # Runs even when 'test' failed, so that one run reports both.
+      - name: pc render -r
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: pc --no-ansi --threads-max 4 render -r
+
+  # One check to require in branch protection, however the matrix above changes.
+  result:
+    name: Result
+    if: ${{ always() }}
+    needs: pub
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          RESULT: ${{ needs.pub.result }}
+        run: |
+          echo "//pub: ${RESULT}"
+          [ "${RESULT}" = "success" ]

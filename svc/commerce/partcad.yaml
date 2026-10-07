@@ -7,3 +7,7 @@ dependencies:
     desc: Home Depot online store.
     type: git
     url: https://github.com/partcad/svc-commerce-homedepot
+  lowes:
+    desc: Lowe's online store.
+    type: git
+    url: https://github.com/partcad/svc-commerce-lowes

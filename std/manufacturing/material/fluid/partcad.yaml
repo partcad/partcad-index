@@ -1,0 +1,92 @@
+# The package path this catalogue is published at, so that standalone
+# development uses the very same addresses its consumers will.
+name: //pub/std/manufacturing/material/fluid
+
+# Every density below is in kg/m^3 and every viscosity in Pa*s, which is how
+# PartCAD reads them from the release that resolves a part's mass from its
+# material and lets a scene name the fluid it is filled with
+# (partcad/partcad#755, #757). Before it, a density was read in g/mm^3, in which
+# the same substance is a number a million times smaller - so an older PartCAD
+# would make a scene's water a million times too dense. It is refused here
+# rather than left to simulate anything. The kg/m^3 densities need #755 and the
+# 'viscosity' field and a scene's 'medium:' need #757; PartCAD releases on every
+# merge to 'devel', so #755 is expected to ship as 0.8.169 and #757 as 0.8.170.
+# TODO: this must be the release #757 actually lands in; correct it if it is not.
+partcad: ">=0.8.170"
+
+desc: Standard fluids - air, fresh water and seawater - as PartCAD materials.
+
+# What these are for. A part is rarely made of water; a *scene* is often filled
+# with it. A scene names the fluid it is filled with the way a part names what it
+# is made of - 'medium: //pub/std/manufacturing/material/fluid:seawater' - and a
+# simulation of that scene drags and buoys what moves through it with the two
+# facts below. A scene that names none is a vacuum, which is what every engine
+# assumes, so there is deliberately no 'vacuum' here: it is the absence of a
+# medium, not a substance with a density of zero.
+#
+# Three conventions this file keeps, so that a reader does not have to work them
+# out from the entries:
+#
+# * Every value is SI, as every physical quantity PartCAD states is (only
+#   lengths and angles are millimetres and degrees): 'density' in kg/m^3 and
+#   'viscosity' - the *dynamic* viscosity - in Pa*s, the numbers the sources
+#   below tabulate, written as they print them.
+#
+# * Every value is at one temperature, 15 C, and at sea-level pressure, so that
+#   the three can be compared and so that each is the reference a field already
+#   uses: the ICAO standard atmosphere for air, and the ITTC's reference
+#   properties for fresh water and seawater, which are what towing tanks and
+#   ship-model tests are corrected to. A fluid at another temperature is another
+#   material; a package that needs warm water catalogues its own and names it.
+materials:
+  air:
+    formal: Air
+    full: Air at sea level (ICAO standard atmosphere, 15 C, 101.325 kPa)
+    desc: |
+      Dry air under the ICAO standard atmosphere at mean sea level. Its
+      buoyancy is a fraction of a percent of what almost anything solid
+      weighs, so what it does to a simulation is drag: a part dropped through it falls a
+      little slower than in a vacuum, and a light, broad one - a sheet, a
+      propeller blade - a lot slower. A scene with no medium is a vacuum, not
+      this; name it when the drag matters.
+    url: https://en.wikipedia.org/wiki/International_Standard_Atmosphere
+    density: 1.225 # kg/m^3
+    viscosity: 1.7894e-5 # Pa*s
+    tags:
+      - fluid
+      - gas
+      - air
+  water:
+    formal: H2O
+    full: Fresh water at 15 C
+    desc: |
+      Fresh water at 15 C and atmospheric pressure, as tabulated by the ITTC
+      for model tests in a towing tank. What a part made of something denser
+      sinks in and something lighter rises through; a tank, a pool, a river.
+      Seawater is denser by about 2.7 percent, which is the difference between
+      a neutrally buoyant vehicle trimmed in one floating or sinking in the
+      other.
+    url: https://www.ittc.info/media/11764/75-02-01-03.pdf
+    density: 999.1 # kg/m^3
+    viscosity: 0.001138 # Pa*s
+    tags:
+      - fluid
+      - liquid
+      - water
+  seawater:
+    formal: Seawater
+    full: Standard seawater at 15 C (absolute salinity 35.165 g/kg)
+    desc: |
+      Standard seawater - practical salinity 35, absolute salinity
+      35.16504 g/kg - at 15 C and atmospheric pressure, as tabulated by the
+      ITTC. The reference ocean: what an underwater vehicle, a buoy or a hull
+      is ballasted against, unless it is meant for a sea that is fresher or
+      saltier than this.
+    url: https://www.ittc.info/media/11764/75-02-01-03.pdf
+    density: 1026.0 # kg/m^3
+    viscosity: 0.001220 # Pa*s
+    tags:
+      - fluid
+      - liquid
+      - water
+      - marine

@@ -8,9 +8,11 @@ name: //pub/std/manufacturing/material/fluid
 # (partcad/partcad#755, #757). Before it, a density was read in g/mm^3, in which
 # the same substance is a number a million times smaller - so an older PartCAD
 # would make a scene's water a million times too dense. It is refused here
-# rather than left to simulate anything.
-# TODO: set to the release partcad/partcad#755 and #757 land in, if that is not this one.
-partcad: ">=0.8.169"
+# rather than left to simulate anything. The kg/m^3 densities need #755 and the
+# 'viscosity' field and a scene's 'medium:' need #757; PartCAD releases on every
+# merge to 'devel', so #755 is expected to ship as 0.8.169 and #757 as 0.8.170.
+# TODO: this must be the release #757 actually lands in; correct it if it is not.
+partcad: ">=0.8.170"
 
 desc: Standard fluids - air, fresh water and seawater - as PartCAD materials.
 

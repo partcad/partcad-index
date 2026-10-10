@@ -2,12 +2,15 @@
 # development uses the very same addresses its consumers will.
 name: //pub/std/manufacturing/material/fluid
 
-# 'materials:' is only read by the PartCAD that has the material object type.
-# 'viscosity', and a scene's 'medium:' that names one of these, are read from
-# the release carrying partcad/partcad#757 (scenes state their gravity and the
-# fluid they are filled with); an older one reads the density and ignores the
-# rest, which is harmless, so the floor stays where the object type put it.
-partcad: ">=0.8.46"
+# Every density below is in kg/m^3 and every viscosity in Pa*s, which is how
+# PartCAD reads them from the release that resolves a part's mass from its
+# material and lets a scene name the fluid it is filled with
+# (partcad/partcad#755, #757). Before it, a density was read in g/mm^3, in which
+# the same substance is a number a million times smaller - so an older PartCAD
+# would make a scene's water a million times too dense. It is refused here
+# rather than left to simulate anything.
+# TODO: set to the release partcad/partcad#755 and #757 land in, if that is not this one.
+partcad: ">=0.8.169"
 
 desc: Standard fluids - air, fresh water and seawater - as PartCAD materials.
 
@@ -22,13 +25,10 @@ desc: Standard fluids - air, fresh water and seawater - as PartCAD materials.
 # Three conventions this file keeps, so that a reader does not have to work them
 # out from the entries:
 #
-# * 'density' is g/mm^3, which is what PartCAD computes with everywhere. A
-#   datasheet quotes kg/m^3, a million times larger: water at 999.1 kg/m^3 is
-#   0.0009991 here.
-#
-# * 'viscosity' is the *dynamic* viscosity, in g/(mm*s) - the units 'density' is
-#   in - which is numerically the same as Pa*s, the unit a datasheet quotes.
-#   Water at 15 C is 0.001138 in both.
+# * Every value is SI, as every physical quantity PartCAD states is (only
+#   lengths and angles are millimetres and degrees): 'density' in kg/m^3 and
+#   'viscosity' - the *dynamic* viscosity - in Pa*s, the numbers the sources
+#   below tabulate, written as they print them.
 #
 # * Every value is at one temperature, 15 C, and at sea-level pressure, so that
 #   the three can be compared and so that each is the reference a field already
@@ -48,8 +48,8 @@ materials:
       propeller blade - a lot slower. A scene with no medium is a vacuum, not
       this; name it when the drag matters.
     url: https://en.wikipedia.org/wiki/International_Standard_Atmosphere
-    density: 1.225e-6 # g/mm^3, i.e. 1.225 kg/m^3
-    viscosity: 1.7894e-5 # g/(mm*s), i.e. Pa*s
+    density: 1.225 # kg/m^3
+    viscosity: 1.7894e-5 # Pa*s
     tags:
       - fluid
       - gas
@@ -65,8 +65,8 @@ materials:
       a neutrally buoyant vehicle trimmed in one floating or sinking in the
       other.
     url: https://www.ittc.info/media/11764/75-02-01-03.pdf
-    density: 0.0009991 # g/mm^3, i.e. 999.1 kg/m^3
-    viscosity: 0.001138 # g/(mm*s), i.e. Pa*s
+    density: 999.1 # kg/m^3
+    viscosity: 0.001138 # Pa*s
     tags:
       - fluid
       - liquid
@@ -81,8 +81,8 @@ materials:
       is ballasted against, unless it is meant for a sea that is fresher or
       saltier than this.
     url: https://www.ittc.info/media/11764/75-02-01-03.pdf
-    density: 0.001026 # g/mm^3, i.e. 1026.0 kg/m^3
-    viscosity: 0.001220 # g/(mm*s), i.e. Pa*s
+    density: 1026.0 # kg/m^3
+    viscosity: 0.001220 # Pa*s
     tags:
       - fluid
       - liquid

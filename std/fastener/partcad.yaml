@@ -1,0 +1,16 @@
+desc: |
+  Standard fasteners described by what they are rather than by the units of
+  their standard: a family here can hold imperial and metric sizes side by
+  side, and the interfaces they are fastened through.
+cover:
+  package: nail
+
+dependencies:
+  # The nails of timber construction - ASTM F1667/F547/C514 and
+  # EN 14592/EN 1995-1-1 - and the interfaces they are driven through and held
+  # by. Published at //pub/std/fastener/nail, with its imperial and metric
+  # sizes at .../nail/imperial and .../nail/metric.
+  nail:
+    desc: Nails for timber construction, imperial and metric, with the interfaces they are driven through and held by
+    type: git
+    url: https://github.com/partcad/std-fastener-nail

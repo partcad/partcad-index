@@ -1,0 +1,38 @@
+# 'main' only ever moves by being fast-forwarded to 'devel' during a release,
+# so a pull request against it is a mistake: close it and point at 'devel'.
+#
+# GitHub has no setting that stops a pull request from being opened against a
+# branch; this is the closest thing. 'pull_request_target' runs the copy of
+# this file on 'main', and checks nothing out, so it is safe on forks.
+name: No pull requests to main
+
+on:
+  pull_request_target:
+    branches: ["main"]
+    # 'edited' is a pull request retargeted at 'main' after it was opened.
+    types: [opened, reopened, edited, synchronize]
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  close:
+    name: Close
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v9
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const pull_number = context.payload.pull_request.number;
+            // 'edited' also fires for a title or body edit on one already closed.
+            if (context.payload.pull_request.state !== "open") {
+              return;
+            }
+            await github.rest.issues.createComment({
+              owner, repo, issue_number: pull_number,
+              body: "Pull requests are not accepted against `main`: it is fast-forwarded to `devel` on release. Please open a new pull request against `devel` instead.",
+            });
+            await github.rest.pulls.update({ owner, repo, pull_number, state: "closed" });
+            core.setFailed("Pull requests must target 'devel', not 'main'.");

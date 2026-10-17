@@ -10,3 +10,5 @@ dependencies:
     desc: LEGO parts from the LDraw library, as parametric PartCAD parts
     type: git
     url: https://github.com/partcad/partcad-ldraw/
+    track: main
+    revision: 449f9832fff794bcf25a0ac1e487064c521b4461

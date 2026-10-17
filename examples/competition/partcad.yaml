@@ -3,3 +3,5 @@ dependencies:
     desc: "Too Tall Tobby: practice models"
     type: git
     url: https://github.com/partcad/partcad-examples-competition-tootalltoby
+    track: main
+    revision: a633e213057e4cde1f6ccf1376e00dc281982df9

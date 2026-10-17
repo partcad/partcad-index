@@ -3,11 +3,17 @@ dependencies:
     desc: goBILDA online store.
     type: git
     url: https://github.com/partcad/svc-commerce-gobilda
+    track: main
+    revision: 7f56e26dce1a43863359c8393b7cc11d32fabc14
   homedepot:
     desc: Home Depot online store.
     type: git
     url: https://github.com/partcad/svc-commerce-homedepot
+    track: main
+    revision: 45f80c1fbb3131ef1e604e2f8a309a2dddc96dc8
   lowes:
     desc: Lowe's online store.
     type: git
     url: https://github.com/partcad/svc-commerce-lowes
+    track: main
+    revision: a41b3cbbd5fcc47979ea0271c0a3f4f157f61c1e

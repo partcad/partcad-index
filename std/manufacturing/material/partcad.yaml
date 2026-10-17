@@ -10,10 +10,14 @@ dependencies:
     desc: Standard polymers (thermoplastics, composites, elastomers)
     type: git
     url: https://github.com/partcad/std-manufacturing-materials-plastic
+    track: main
+    revision: 8bad8ed6bea56d6cee8292b034932d6d3e7db90f
   metal:
     desc: Standard metals and alloys (aluminium, steel, stainless, titanium, magnesium, copper, nickel)
     type: git
     url: https://github.com/partcad/std-manufacturing-materials-metals
+    track: main
+    revision: 2b2cc80c285d94e8f99b50349d1c9d30b92ca115
 
 # 'fluid' is the third family - air, fresh water and seawater, what a scene is
 # filled with rather than what a part is made of - and it is a sub-directory

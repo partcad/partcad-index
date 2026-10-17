@@ -4,5 +4,6 @@ dependencies:
     web: https://www.youtube.com/c/ZackFreedman
     type: git
     url: https://github.com/openvmp/cq-gridfinity/
-    revision: feature/partcad-shim
+    track: feature/partcad-shim
+    revision: 2b481cadb77d9471ddfd9cde679b9b5ddf999d8b
 

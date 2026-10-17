@@ -14,3 +14,5 @@ dependencies:
     desc: Nails for timber construction, imperial and metric, with the interfaces they are driven through and held by
     type: git
     url: https://github.com/partcad/std-fastener-nail
+    track: main
+    revision: 891b2fba9b332d38c609ac6bb09c74218fd2ec5c

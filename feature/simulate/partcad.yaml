@@ -3,9 +3,13 @@ dependencies:
     desc: Reading, writing, opening and simulating a Gazebo world, in SDFormat.
     type: git
     url: https://github.com/partcad/partcad-sim-gazebo
+    track: main
+    revision: ce02e627ae496cd970a4638fc7f5346c0557bd4c
     web: https://gazebosim.org/
   mujoco:
     desc: Reading, writing, opening and simulating a MuJoCo model, in MJCF.
     type: git
     url: https://github.com/partcad/partcad-sim-mujoco
+    track: main
+    revision: e0aa7f95da3a4f65aba051d557050703b9bb4483
     web: https://mujoco.org/

@@ -3,3 +3,5 @@ dependencies:
     desc: EGO POWER+
     type: git
     url: https://github.com/partcad/partcad-electrical-ego.git
+    track: main
+    revision: 97443f9c6c4cc9ca491dc2c5a14298b343fec3a0

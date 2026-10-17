@@ -3,4 +3,5 @@ dependencies:
     desc: CloudGripper
     type: git
     url: https://github.com/openvmp/cloudgripper-robot
-    revision: feature/partcad
+    track: feature/partcad
+    revision: be49bf91cb0f1e7069156aa4c06fca251a4bad1e

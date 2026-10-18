@@ -11,3 +11,18 @@ dependencies:
     desc: Lowe's online store.
     type: git
     url: https://github.com/partcad/svc-commerce-lowes
+  # The LEGO stores. Every LEGO part in //pub/universe/lego names them as its
+  # suppliers; each quotes a part by its LDraw number, which is the SKU those
+  # parts are sold under.
+  lego-pick-a-brick:
+    desc: LEGO's own Pick a Brick shop.
+    type: git
+    url: https://github.com/partcad/svc-commerce-lego-pick-a-brick
+  bricklink:
+    desc: BrickLink, the LEGO marketplace.
+    type: git
+    url: https://github.com/partcad/svc-commerce-bricklink
+  brickowl:
+    desc: Brick Owl, the LEGO marketplace.
+    type: git
+    url: https://github.com/partcad/svc-commerce-brickowl

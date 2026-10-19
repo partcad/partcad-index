@@ -25,10 +25,9 @@ change to all of them, and these rules exist so that it is never a surprise.
    A dependency that follows no branch names a tag that is never moved instead. Nothing a consumer gets from
    the index changes until a pull request here changes a `revision:`.
 4. **A tracked branch is a promise.** Once a dependency is added to `devel` or `main` tracking a branch, that
-   branch is expected to keep working with every PartCAD release since the one this repository's top-level
-   `partcad.yaml` required at that moment (its `partcad:`), or since the one the dependency itself required
-   then, if that was newer: it cannot keep a support it never had. Moving the pin to the tip of that branch
-   must never be what breaks somebody.
+   branch is expected to keep working with every PartCAD release since the one the dependency's own
+   `partcad:` required at that moment. Moving the pin to the tip of that branch must never be what breaks
+   somebody.
 5. **Every dependency declares the oldest PartCAD it works with**, as `partcad:` in its own `partcad.yaml`
    (`partcad: ">=0.8.175"`). A PartCAD older than that then refuses the package with `Incompatible PartCAD
    version!` instead of reading it wrong. Packages outside the index should do the same.
@@ -43,8 +42,9 @@ releases and breaking changes](https://partcad.readthedocs.io/en/latest/contribu
 1. Find the most appropriate parent package by browsing the directories, and create a directory of your own
    if none fits. A sub-directory holding a `partcad.yaml` is a package of the directory above it, so every
    directory on the way down from the top level needs one, if only an empty one.
-2. Make sure the package's own `partcad.yaml` says `partcad:`, as low as it truthfully can (rule 5). `pc init`
-   writes the version that ran it, which is truthful but often higher than it needs to be.
+2. Make sure the package's own `partcad.yaml` says `partcad:`, as low as it truthfully can (rule 5): that is
+   where the branch's promise (rule 4) starts. `pc init` writes the version that ran it, which is truthful but
+   often higher than it needs to be.
 3. Add the dependency, pinned. From the parent package's directory:
 
    ```shell
@@ -92,8 +92,11 @@ Such a change does not go to the tracked branch. Instead:
 3. **Leave the old branch alone.** Do not force-push, rebase or delete a branch the index tracks or has ever
    tracked: older commits of the index pin its commits, packages pin those commits of the index, and every one
    of them has to stay fetchable.
-4. **Wait for PartCAD, if you need a new one.** A package may require a PartCAD only once it is released
-   (PartCAD's `main`, which is what PyPI has): the index's `main` serves people who install from there.
+4. **Mind which PartCAD has what you need.** The index's `main` may pin a package only once the PartCAD it
+   requires is released (PartCAD's `main`, which is what PyPI has): `main` is what an installed PartCAD
+   reads. The index's `devel` may pin it as soon as that PartCAD is on PartCAD's `devel`: a PartCAD running
+   from its sources reads the index's `devel`, which is how a package and the PartCAD feature it needs are
+   developed together. Such a pull request can merge to `devel`; `main` waits for the release.
 5. **Open a pull request against `devel`** that switches the dependency's `track:` to the new branch and
    `revision:` to its commit. In the same pull request, fix every package of the index that uses what changed
    (search this repository and the repositories it pins for the package's path, `//pub/...`), or, if
@@ -101,7 +104,7 @@ Such a change does not go to the tracked branch. Instead:
    and retire the old one later. Say in the description what breaks, for whom, and which PartCAD the new
    branch requires.
 
-The new branch's window under rule 4 starts when that pull request is merged.
+Rule 4 holds the new branch to the `partcad:` it declares when that pull request is merged.
 
 ## Releasing the index
 
@@ -112,7 +115,8 @@ For the maintainers of this repository:
    pull request against `devel`.
 2. **Test `devel`** with the PartCAD release the change needs, or the latest one: `pc --devel-index` (or
    `PC_DEVEL_INDEX=true`) makes any command in a package that imports the index use its `devel` instead of its
-   `main`, wherever it appears in the dependency tree.
+   `main`, wherever it appears in the dependency tree. A PartCAD running from its sources (`pip install -e`,
+   `poetry install`) does that by default.
 3. **Fast-forward `main`** to the tested commit of `devel`:
 
    ```shell
@@ -125,5 +129,4 @@ For the maintainers of this repository:
 **Raising the index's own floor**, the top-level `partcad:`, is a breaking change of the whole index: a PartCAD
 older than it refuses `//pub` at its root, with one message, rather than one package at a time. Do it when that
 one message is better than the many -- when most of what the index pins requires a newer PartCAD anyway -- and in
-a pull request of its own. Dependencies added from then on start their window (rule 4) at the new floor; those
-added earlier keep theirs.
+a pull request of its own.

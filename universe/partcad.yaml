@@ -8,7 +8,7 @@ dependencies:
   # as parametric PartCAD parts, published at //pub/universe/lego/ldraw. Every
   # part names the stores it is bought at as its suppliers, which are
   # registered with the other stores at //pub/svc/commerce: LEGO's Pick a Brick
-  # (lego-pick-a-brick), BrickLink (bricklink) and Brick Owl (brickowl).
+  # (lego-pick-a-brick) and BrickLink (bricklink).
   lego:
     desc: LEGO parts from the LDraw library, as parametric PartCAD parts
     type: git

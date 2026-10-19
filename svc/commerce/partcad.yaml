@@ -22,7 +22,3 @@ dependencies:
     desc: BrickLink, the LEGO marketplace.
     type: git
     url: https://github.com/partcad/svc-commerce-bricklink
-  brickowl:
-    desc: Brick Owl, the LEGO marketplace.
-    type: git
-    url: https://github.com/partcad/svc-commerce-brickowl

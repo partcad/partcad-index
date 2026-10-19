@@ -3,5 +3,7 @@ dependencies:
     desc: Technical drawings (PDF, SVG, DXF) produced by draftwright.
     type: git
     url: https://github.com/partcad/partcad-render-draftwright
+    track: main
+    revision: 6b77970dd2f9cef6c2b2b0b6a7882a78f4a4c6ab
     web: https://github.com/pzfreo/draftwright
     poc: pzfreo@gmail.com

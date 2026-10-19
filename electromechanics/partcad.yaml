@@ -5,11 +5,17 @@ dependencies:
     desc: STEPPERONLINE
     type: git
     url: https://github.com/partcad/partcad-electromechanics-stepperonline.git
+    track: main
+    revision: c86aaa1aa4d87556135e7e3ba28d7030bc3ca9b8
   cloudray:
     desc: Cloudray
     type: git
     url: https://github.com/partcad/partcad-electromechanics-cloudray.git
+    track: main
+    revision: 9d4451c05ddd6cd33f7d38b15bb09690b88852f8
   towerpro:
     desc: TowerPro
     type: git
     url: https://github.com/partcad/partcad-electromechanics-towerpro.git
+    track: main
+    revision: 83775bf2722f831ea5b42a16b9edb09922750c8b

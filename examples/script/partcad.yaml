@@ -6,14 +6,17 @@ dependencies:
     desc: Examples of CadQuery scripts
     type: git
     url: https://github.com/openvmp/cadquery
-    revision: examples-in-partcad
+    track: examples-in-partcad
+    revision: 8af6f4689575de33c58c10c885c4449614abd9d1
   cadquery-contrib:
     desc: A place to share CadQuery scripts, modules, tutorials and projects
     type: git
     url: https://github.com/openvmp/forked-cadquery-contrib
-    revision: hotfix/cqgi-hidden-errors
+    track: hotfix/cqgi-hidden-errors
+    revision: b5917550e3d6d83f1f8f3ea3e88918005f73f6e5
   build123d:
     desc: Examples of build123d scripts
     type: git
     url: https://github.com/openvmp/build123d
-    revision: partcad-examples-update-2
+    track: partcad-examples-update-2
+    revision: 6e7f5b631b027560d619dd61ffdcb23639a4cd36

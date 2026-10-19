@@ -5,11 +5,13 @@ cover:
 
 dependencies:
   # The LEGO universe. The LDraw parts library (LEGO-compatible parts) exposed
-  # as parametric PartCAD parts, published at //pub/universe/lego/ldraw. Every
-  # part names the stores it is bought at as its suppliers, which are
-  # registered with the other stores at //pub/svc/commerce: LEGO's Pick a Brick
-  # (lego-pick-a-brick) and BrickLink (bricklink).
+  # as parametric PartCAD parts, published at //pub/universe/lego/ldraw. The
+  # stores LEGO parts are bought at are registered with the other stores, at
+  # //pub/svc/commerce: LEGO's Pick a Brick (lego-pick-a-brick) and BrickLink
+  # (bricklink).
   lego:
     desc: LEGO parts from the LDraw library, as parametric PartCAD parts
     type: git
     url: https://github.com/partcad/partcad-ldraw/
+    track: main
+    revision: 449f9832fff794bcf25a0ac1e487064c521b4461

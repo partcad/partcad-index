@@ -3,7 +3,11 @@ dependencies:
     desc: GoBILDA
     type: git
     url: https://github.com/partcad/partcad-robotics-part-vendor-gobilda.git
+    track: main
+    revision: 196ec34a1ca8ba737069e7b49fcafe2b30a386cc
   dfrobot:
     desc: DFRobot
     type: git
     url: https://github.com/partcad/partcad-robotics-part-vendor-dfrobot.git
+    track: main
+    revision: a44bcb2ea1b165f4b83f6426f7860eb49a992345

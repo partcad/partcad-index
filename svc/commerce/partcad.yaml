@@ -3,22 +3,31 @@ dependencies:
     desc: goBILDA online store.
     type: git
     url: https://github.com/partcad/svc-commerce-gobilda
+    track: main
+    revision: 7f56e26dce1a43863359c8393b7cc11d32fabc14
   homedepot:
     desc: Home Depot online store.
     type: git
     url: https://github.com/partcad/svc-commerce-homedepot
+    track: main
+    revision: 45f80c1fbb3131ef1e604e2f8a309a2dddc96dc8
   lowes:
     desc: Lowe's online store.
     type: git
     url: https://github.com/partcad/svc-commerce-lowes
-  # The LEGO stores. Every LEGO part in //pub/universe/lego names them as its
-  # suppliers; each quotes a part by its LDraw number, which is the SKU those
-  # parts are sold under.
+    track: main
+    revision: a41b3cbbd5fcc47979ea0271c0a3f4f157f61c1e
+  # The LEGO stores. Each quotes a part declared with 'vendor: lego' and its
+  # LDraw number as its SKU, the number //pub/universe/lego names it by.
   lego-pick-a-brick:
     desc: LEGO's own Pick a Brick shop.
     type: git
     url: https://github.com/partcad/svc-commerce-lego-pick-a-brick
+    track: main
+    revision: b18288520c92d7f2d620a2495ae74f70ab18798a
   bricklink:
     desc: BrickLink, the LEGO marketplace.
     type: git
     url: https://github.com/partcad/svc-commerce-bricklink
+    track: main
+    revision: 99010beddfd02fa98ad179bc86c315f1afb033d9

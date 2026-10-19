@@ -6,11 +6,17 @@ dependencies:
     desc: Intel SBCs
     type: git
     url: https://github.com/partcad/partcad-electronics-sbcs-intel.git
+    track: main
+    revision: 598777736862c8bf42f95da85cb9284d47ce2659
   raspberrypi:
     desc: RaspberryPi
     type: git
     url: https://github.com/partcad/partcad-electronics-sbcs-raspberrypi.git
+    track: main
+    revision: 1573e918bd02e5d60397cea61d8934b5a0992725
   arduino:
     desc: Arduino
     type: git
     url: https://github.com/partcad/partcad-electronics-sbcs-arduino.git
+    track: main
+    revision: 6f2942b0ad05821bd64524ded4f767c4a70a8b4b

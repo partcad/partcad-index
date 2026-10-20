@@ -1,0 +1,8 @@
+dependencies:
+  solidcraft:
+    desc: Parts read from SolidCraft designs, Rhino and IGES files, and objects exported to and edited in SolidCraft.
+    type: git
+    url: https://github.com/partcad/partcad-solidcraft
+    track: main
+    revision: 42162b0027a26fc8c5b6288782f47193ba08ecb0
+    web: https://github.com/bherbruck/solidcraft

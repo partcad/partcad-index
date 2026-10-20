@@ -4,4 +4,4 @@ dependencies:
     type: git
     url: https://github.com/openvmp/openvmp-models
     track: main
-    revision: 1272968cdf2d2ac0d296f9a53d899bce758fcaa5
+    revision: dc3bcab9a60b653b1a43b1504bda6a2974023cb7

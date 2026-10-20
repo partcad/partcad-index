@@ -9,8 +9,8 @@ change to all of them, and these rules exist so that it is never a surprise.
 1. **Every pull request merges to `devel`.** Nothing merges to `main`.
 2. **`main` only moves by fast-forward from `devel`.** That fast-forward is the release of the index (see
    [Releasing the index](#releasing-the-index)).
-3. **The index always pins an exact revision.** Every `git` dependency names a commit id in `revision:`,
-   under the `track:` of the branch it follows:
+3. **The index always pins an exact revision.** Every `git` dependency that follows a branch names a commit id
+   in `revision:`, under the `track:` of that branch:
 
    ```yaml
    dependencies:
@@ -22,8 +22,9 @@ change to all of them, and these rules exist so that it is never a surprise.
        revision: fdba57672e2bff7434386fa78428e13062ce4d46
    ```
 
-   A dependency that follows no branch names a tag that is never moved instead. Nothing a consumer gets from
-   the index changes until a pull request here changes a `revision:`.
+   A dependency that follows no branch has no `track:`, and its `revision:` names a tag that is never moved
+   instead, so every fetch of it resolves to the same commit. Nothing a consumer gets from the index changes
+   until a pull request here changes a `revision:`.
 4. **A tracked branch is a promise.** Once a dependency is added to `devel` or `main` tracking a branch, that
    branch is expected to keep working with every PartCAD release since the one the dependency's own
    `partcad:` required at that moment. Moving the pin to the tip of that branch must never be what breaks
@@ -31,7 +32,7 @@ change to all of them, and these rules exist so that it is never a surprise.
 5. **Every dependency declares the oldest PartCAD it works with**, as `partcad:` in its own `partcad.yaml`
    (`partcad: ">=0.8.175"`). A PartCAD older than that then refuses the package with `Incompatible PartCAD
    version!` instead of reading it wrong. Packages outside the index should do the same.
-6. **Every dependency is pinned to a particular revision**, with `track:` or without it.
+6. **Every `git` dependency is pinned to a particular revision**, with `track:` or without it.
 
 PartCAD itself is released the same way (pull requests to `devel`, `main` fast-forwarded from it), and its
 contributors follow the matching process for a change to PartCAD that breaks packages here: see [Branches,

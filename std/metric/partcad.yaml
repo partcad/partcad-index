@@ -20,7 +20,7 @@ dependencies:
     type: git
     url: https://github.com/partcad/partcad-standard-metric-m/
     track: main
-    revision: 6c7bc9283b84ff9d248422200cf357f9681de760
+    revision: 8c4ec4f6c46abcf4c832a7057f219f3549dbb8ce
   nema:
     desc: Standard NEMA* interfaces
     type: git

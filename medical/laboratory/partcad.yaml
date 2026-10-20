@@ -6,4 +6,4 @@ dependencies:
     type: git
     url: https://github.com/openvmp/forked-FourThievesVinegar-solderless-microlab
     track: feature/partcad
-    revision: 5e2161123918f9c796c44e190f5a2e8d5ee7292e
+    revision: f0fdbba071e4f1d7f67bafaf08ca755ea2c73c8b

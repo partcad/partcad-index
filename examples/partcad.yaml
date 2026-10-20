@@ -7,5 +7,5 @@ dependencies:
     desc: Examples that come with the PartCAD itself
     type: git
     url: https://github.com/partcad/partcad
-    revision: 0.8.0
+    revision: 0.8.233
     relPath: examples

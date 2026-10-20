@@ -17,3 +17,17 @@ dependencies:
     url: https://github.com/partcad/svc-commerce-lowes
     track: main
     revision: a41b3cbbd5fcc47979ea0271c0a3f4f157f61c1e
+  # The LEGO stores. Each quotes a part declared with 'vendor: lego' and its
+  # LDraw number as its SKU, the number //pub/universe/lego names it by.
+  lego-pick-a-brick:
+    desc: LEGO's own Pick a Brick shop.
+    type: git
+    url: https://github.com/partcad/svc-commerce-lego-pick-a-brick
+    track: main
+    revision: b18288520c92d7f2d620a2495ae74f70ab18798a
+  bricklink:
+    desc: BrickLink, the LEGO marketplace.
+    type: git
+    url: https://github.com/partcad/svc-commerce-bricklink
+    track: main
+    revision: 99010beddfd02fa98ad179bc86c315f1afb033d9

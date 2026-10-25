@@ -5,4 +5,5 @@ dependencies:
     desc: Four Thieves Vinegar Collective - Harm Reduction for the Living
     type: git
     url: https://github.com/openvmp/forked-FourThievesVinegar-solderless-microlab
-    revision: feature/partcad
+    track: feature/partcad
+    revision: f0fdbba071e4f1d7f67bafaf08ca755ea2c73c8b

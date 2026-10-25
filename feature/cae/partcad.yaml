@@ -3,4 +3,41 @@ dependencies:
     desc: Finite element and fluid dynamics analysis, by CalculiX.
     type: git
     url: https://github.com/partcad/partcad-cae-calculix
+    track: main
+    revision: 89eec9e2aff968f990467040080ec7cfce4c00b5
     web: https://www.calculix.de/
+  code_aster:
+    desc: Finite element, modal and heat transfer analysis, by Code_Aster.
+    type: git
+    url: https://github.com/partcad/partcad-cae-code-aster
+    track: main
+    revision: 25ca08f3575aba721c301a989ac6df8f0d37e2f1
+    web: https://code-aster.org/
+  code_saturne:
+    desc: Fluid dynamics analysis, by code_saturne.
+    type: git
+    url: https://github.com/partcad/partcad-cae-code-saturne
+    track: main
+    revision: 2b2d4654e57262047cfb062a0605b6c47a0b0355
+    web: https://www.code-saturne.org/
+  elmer:
+    desc: Finite element, modal, heat transfer and fluid dynamics analysis, by Elmer.
+    type: git
+    url: https://github.com/partcad/partcad-cae-elmer
+    track: main
+    revision: d10cbd1c20fd6c19fade7718d759080d923a8b25
+    web: https://www.elmerfem.org/
+  moose:
+    desc: Finite element, modal, heat transfer and fluid dynamics analysis, by MOOSE.
+    type: git
+    url: https://github.com/partcad/partcad-cae-moose
+    track: main
+    revision: db97c7e627ee0a8b8356c31552fe9e26fc7cea43
+    web: https://mooseframework.inl.gov/
+  openfoam:
+    desc: Fluid dynamics analysis, by OpenFOAM.
+    type: git
+    url: https://github.com/partcad/partcad-cae-openfoam
+    track: main
+    revision: 8cb94e7d61f1f7f567eb1bcb6638decc751071da
+    web: https://www.openfoam.com/

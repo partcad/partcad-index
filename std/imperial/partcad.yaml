@@ -3,8 +3,12 @@ dependencies:
     desc: Standard imperial parts implemented in cq-warehouse
     type: git
     url: https://github.com/partcad/partcad-cqwarehouse/
+    track: main
+    revision: c33efa8da61558c8955d2aa42c6ddaf3adb41c15
     relPath: imperial.yaml
   dimensional-lumber:
     desc: Dimensional lumber in imperial units
     type: git
     url: https://github.com/partcad/partcad-standard-imperial-dimensional-lumber/
+    track: main
+    revision: 78b6bc7bbaebed026b52912873cb6f733cf9f787

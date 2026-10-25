@@ -3,3 +3,5 @@ dependencies:
     desc: OpenVMP robots
     type: git
     url: https://github.com/openvmp/openvmp-models
+    track: main
+    revision: dc3bcab9a60b653b1a43b1504bda6a2974023cb7

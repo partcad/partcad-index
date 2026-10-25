@@ -6,16 +6,24 @@ dependencies:
     desc: Standard metric parts implemented in cq-warehouse
     type: git
     url: https://github.com/partcad/partcad-cqwarehouse/
+    track: main
+    revision: c33efa8da61558c8955d2aa42c6ddaf3adb41c15
     relPath: metric.yaml
   bosl2:
     desc: Parametric BOSL2 shapes, gears, threading and hardware (Belfry OpenSCAD Library v2)
     type: git
     url: https://github.com/partcad/partcad-bosl2/
+    track: main
+    revision: fdba57672e2bff7434386fa78428e13062ce4d46
   m:
     desc: Standard M* interfaces
     type: git
     url: https://github.com/partcad/partcad-standard-metric-m/
+    track: main
+    revision: 8c4ec4f6c46abcf4c832a7057f219f3549dbb8ce
   nema:
     desc: Standard NEMA* interfaces
     type: git
     url: https://github.com/partcad/partcad-standard-metric-nema/
+    track: main
+    revision: 7f14df881bb8d7584e787dd6c5380c10ac0847e1

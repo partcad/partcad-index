@@ -1,0 +1,15 @@
+dependencies:
+  cadcraft:
+    desc: AutoCAD drawings (DWG and DXF) read as parts and as assemblies, objects rendered as DWG or DXF drawings, and drawings opened in CADCraft.
+    type: git
+    url: https://github.com/partcad/partcad-cadcraft
+    track: main
+    revision: 45e1e8474ef2990225a4584a954c1d95c4c32521
+    web: https://github.com/storytold/cadcraft
+  solidcraft:
+    desc: Parts read from SolidCraft designs, Rhino and IGES files, and objects exported to and edited in SolidCraft.
+    type: git
+    url: https://github.com/partcad/partcad-solidcraft
+    track: main
+    revision: 42162b0027a26fc8c5b6288782f47193ba08ecb0
+    web: https://github.com/bherbruck/solidcraft

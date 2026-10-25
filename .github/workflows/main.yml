@@ -19,4 +19,4 @@ jobs:
     name: PartCAD from PyPI
     uses: ./.github/workflows/pub.yml
     with:
-      partcad: "partcad"
+      partcad: pypi

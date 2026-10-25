@@ -1,144 +1,153 @@
-# Runs 'pc test -r' and 'pc render -r' over the whole index (//pub) with the
-# PartCAD named by the caller. Called by "devel.yml" (pull requests, PartCAD
-# from its 'devel' branch) and "main.yml" (pushes, PartCAD from PyPI).
+# Tests and renders every package of the index (//pub) with one PartCAD.
+# Called by "devel.yml" (pull requests, PartCAD's 'devel' branch) and
+# "main.yml" (pushes, the latest PartCAD on PyPI).
 #
-# The matrix is the one PartCAD's own CI runs "Repo //pub" on at its "deep"
-# level: OSES_SLIM x PYTHONS_SANDBOX in partcad/partcad's
-# ".github/workflows/test.yml". Keep the two in step.
+#   Plan    pins the PartCAD every job below installs, lists the packages of
+#           //pub with it, and splits that list into contiguous ranges.
+#   Shards  one job per range, operating system and Python: 'pc test' and
+#           'pc render' with '--fast-only' on each package of the range.
+#   Result  the one check to require in branch protection.
 #
-# The environment mirrors partcad/partcad's ".github/actions/setup-all" and
-# ".github/actions/setup-test", minus what only PartCAD's own test suite needs:
-# a conda-forge-only Miniforge (PartCAD builds its sandboxes with conda), and
-# OpenSCAD on the host.
+# The operating systems and Pythons are the matrix PartCAD's own CI runs
+# "Repo //pub" on at its "deep" level: OSES_SLIM x PYTHONS_SANDBOX in
+# partcad/partcad's ".github/workflows/test.yml". Keep the two in step.
 name: Test //pub
 
 on:
   workflow_call:
     inputs:
       partcad:
-        description: "pip requirement that installs PartCAD"
+        description: "Which PartCAD: 'devel' (the tip of its devel branch) or 'pypi' (the latest release)"
         type: string
         required: true
+      shards:
+        description: How many ranges to split the packages of //pub into
+        type: number
+        default: 8
 
 permissions:
   contents: read
 
 env:
+  OSES: '["ubuntu-latest", "windows-latest", "macos-latest"]'
+  PYTHONS: '["3.11", "3.14"]'
   PC_TELEMETRY_ENV: test
   PC_TELEMETRY_PERFORMANCE: false
 
 jobs:
-  pub:
-    name: ${{ matrix.os }}, Python ${{ matrix.python-version }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: ["ubuntu-latest", "windows-latest", "macos-latest"]
-        python-version: ["3.11", "3.14"]
-    runs-on: ${{ matrix.os }}
-    # PartCAD gives 'test' alone 60 minutes here; this job renders too.
-    timeout-minutes: 120
+  plan:
+    name: Plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    outputs:
+      partcad-ref: ${{ steps.partcad.outputs.ref }}
+      partcad-version: ${{ steps.partcad.outputs.version }}
+      matrix: ${{ steps.shards.outputs.matrix }}
     defaults:
       run:
         shell: bash -el {0}
     steps:
-      - name: Enable long paths (Windows)
-        if: runner.os == 'Windows'
-        shell: powershell
-        run: |
-          reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem" /v LongPathsEnabled /t REG_DWORD /d 1 /f
-
-      - uses: actions/checkout@v7
-        with:
-          # 'pip install' and the packages under test run third-party code;
-          # nothing here needs the token.
-          persist-credentials: false
-
-      - uses: conda-incubator/setup-miniconda@v4
-        with:
-          miniforge-version: 26.3.2-3
-          # conda-forge only, as in PartCAD's CI: mixing in Anaconda's
-          # 'defaults' picks ABI-incompatible builds.
-          channels: conda-forge
-          python-version: ${{ matrix.python-version }}
-          activate-environment: partcad
-          auto-activate-base: false
-
-      - name: Install OpenSCAD (Linux)
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y openscad
-
-      - name: Install OpenSCAD (macOS)
-        if: runner.os == 'macOS'
-        run: |
-          # The "openscad" cask is disabled; the snapshot one is what PartCAD
-          # uses. It does not necessarily put a binary on PATH.
-          if ! command -v openscad >/dev/null 2>&1; then
-            HOMEBREW_NO_AUTO_UPDATE=1 brew install --cask openscad@snapshot
-          fi
-          if ! command -v openscad >/dev/null 2>&1; then
-            binary="$(find /Applications -maxdepth 4 -path '*/Contents/MacOS/*' \
-              -type f -perm -111 -iname 'openscad' 2>/dev/null | head -n 1)"
-            if [ -z "${binary}" ]; then
-              echo "::error::openscad@snapshot installed but no OpenSCAD executable was found under /Applications"
-              exit 1
-            fi
-            mkdir -p "${HOME}/.local/bin"
-            ln -sf "${binary}" "${HOME}/.local/bin/openscad"
-            echo "${HOME}/.local/bin" >> "${GITHUB_PATH}"
-            export PATH="${HOME}/.local/bin:${PATH}"
-          fi
-          openscad --version
-
-      - name: Install OpenSCAD (Windows)
-        if: runner.os == 'Windows'
-        shell: powershell
-        working-directory: ${{ runner.temp }}
-        run: |
-          curl.exe -fsSL -o openscad.zip https://files.openscad.org/OpenSCAD-2021.01-x86-64.zip
-          curl.exe -fsSL -o openscad.zip.sha256 https://files.openscad.org/OpenSCAD-2021.01-x86-64.zip.sha256
-          $expected = ((Get-Content openscad.zip.sha256) -split '\s+')[0]
-          $actual = (Get-FileHash -Algorithm SHA256 openscad.zip).Hash
-          if ($expected -ne $actual) {
-            Write-Error "SHA256 checksum verification failed"
-            exit 1
-          }
-          Expand-Archive -Force openscad.zip -DestinationPath openscad
-          Add-Content $env:GITHUB_PATH "$env:RUNNER_TEMP\openscad\openscad-2021.01"
-
-      - name: Install PartCAD
-        id: install
+      # One PartCAD for the whole run, so that a push to PartCAD's 'devel' or a
+      # release while the shards run cannot test half of //pub with another.
+      - name: Pin PartCAD
+        id: partcad
+        shell: bash
         env:
           PARTCAD: ${{ inputs.partcad }}
         run: |
-          # PartCAD's wheel build refuses a checkout whose symlinks Git for
-          # Windows left as text files, which is what a 'git+' install gets
-          # without this.
-          git config --global core.symlinks true
-          python -m pip install --upgrade pip
-          python -m pip install --upgrade "${PARTCAD}"
-          pc --no-ansi version
-          pc --no-ansi healthcheck --fix
+          case "${PARTCAD}" in
+          devel)
+            ref="$(git ls-remote https://github.com/partcad/partcad.git refs/heads/devel | cut -f1)"
+            [ -n "${ref}" ] || { echo "::error::Could not resolve partcad/partcad@devel"; exit 1; }
+            echo "PartCAD: partcad/partcad@${ref}"
+            echo "ref=${ref}" >>"${GITHUB_OUTPUT}"
+            ;;
+          pypi)
+            version="$(curl -fsSL https://pypi.org/pypi/partcad/json | python3 -c 'import json, sys; print(json.load(sys.stdin)["info"]["version"])')"
+            echo "PartCAD: ${version} from PyPI"
+            echo "version=${version}" >>"${GITHUB_OUTPUT}"
+            ;;
+          *)
+            echo "::error::Unknown 'partcad' input '${PARTCAD}': expected 'devel' or 'pypi'"
+            exit 1
+            ;;
+          esac
 
-      - name: pc test -r
-        run: pc --no-ansi --threads-max 4 test -r
+      # Into a directory of its own: a 'partcad.yaml' anywhere below the index's
+      # root -- PartCAD's checkout has several -- would be a package of //pub.
+      - uses: actions/checkout@v7
+        with:
+          path: index
+          persist-credentials: false
 
-      # Runs even when 'test' failed, so that one run reports both.
-      - name: pc render -r
-        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
-        run: pc --no-ansi --threads-max 4 render -r
+      - uses: ./index/.github/actions/setup-partcad
+        with:
+          python-version: "3.14"
+          partcad-ref: ${{ steps.partcad.outputs.ref }}
+          partcad-version: ${{ steps.partcad.outputs.version }}
 
-  # One check to require in branch protection, however the matrix above changes.
+      # The packages with something to test or render, as PartCAD sees them.
+      # A package that cannot be loaded is missing from the list, so a listing
+      # that fails fails the run -- but only after the shards are planned, so
+      # that the rest of //pub is still tested and reported.
+      - name: List the packages of //pub
+        id: shards
+        working-directory: index
+        env:
+          COLUMNS: "500"
+          SHARDS: ${{ inputs.shards }}
+        run: |
+          set +e
+          pc --no-ansi list packages -r >../packages.log 2>&1
+          list_rc=$?
+          set -e
+          cat ../packages.log
+          python -I .github/scripts/pub_shards.py --shards "${SHARDS}" --os "${OSES}" --python "${PYTHONS}" \
+            <../packages.log >>"${GITHUB_OUTPUT}"
+          if [ "${list_rc}" -ne 0 ]; then
+            echo "::error title=pc list packages::exited ${list_rc}: the packages it could not load are not tested by any shard"
+            exit "${list_rc}"
+          fi
+
+  shard:
+    name: ${{ matrix.os }}, Python ${{ matrix.python-version }}, shard ${{ matrix.shard.n }}/${{ matrix.shard.of }}
+    needs: plan
+    if: ${{ !cancelled() && needs.plan.outputs.matrix != '' }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 90
+    defaults:
+      run:
+        shell: bash -el {0}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          path: index
+          persist-credentials: false
+
+      - uses: ./index/.github/actions/setup-partcad
+        with:
+          python-version: ${{ matrix.python-version }}
+          partcad-ref: ${{ needs.plan.outputs.partcad-ref }}
+          partcad-version: ${{ needs.plan.outputs.partcad-version }}
+
+      - name: pc test and pc render
+        working-directory: index
+        env:
+          PACKAGES: ${{ matrix.shard.packages }}
+        run: bash .github/scripts/pub_shard.sh
+
   result:
     name: Result
     if: ${{ always() }}
-    needs: pub
+    needs: [plan, shard]
     runs-on: ubuntu-latest
     steps:
       - env:
-          RESULT: ${{ needs.pub.result }}
+          PLAN: ${{ needs.plan.result }}
+          SHARDS: ${{ needs.shard.result }}
         run: |
-          echo "//pub: ${RESULT}"
-          [ "${RESULT}" = "success" ]
+          echo "Plan: ${PLAN}, shards: ${SHARDS}"
+          [ "${PLAN}" = "success" ] && [ "${SHARDS}" = "success" ]

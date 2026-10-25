@@ -22,4 +22,4 @@ jobs:
     name: PartCAD devel
     uses: ./.github/workflows/pub.yml
     with:
-      partcad: "partcad @ git+https://github.com/partcad/partcad.git@devel"
+      partcad: devel

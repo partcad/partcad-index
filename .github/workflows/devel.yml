@@ -1,0 +1,27 @@
+# Gates pull requests into 'devel' on the index working with PartCAD's own
+# 'devel' branch: what both of them will release next.
+#
+# To make this gating, require the "PartCAD devel / Result" check on 'devel'.
+name: Devel
+
+on:
+  pull_request:
+    branches: ["devel"]
+  merge_group:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pub:
+    name: PartCAD devel
+    uses: ./.github/workflows/pub.yml
+    with:
+      partcad: devel
+      # Linux only on a pull request; every push to 'main' runs all three.
+      oses: '["ubuntu-latest"]'

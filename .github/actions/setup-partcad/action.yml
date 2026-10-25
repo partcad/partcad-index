@@ -1,0 +1,127 @@
+# Installs one PartCAD, and what it needs to test and render //pub, on any of
+# the runner images in ".github/workflows/pub.yml".
+#
+# Mirrors partcad/partcad's ".github/actions/setup-all" and "setup-test", minus
+# what only PartCAD's own test suite needs: a conda-forge-only Miniforge
+# (PartCAD builds its sandboxes with conda), OpenSCAD on the host, and
+# 'pc healthcheck --fix'. Steps after this one run in the 'partcad' conda
+# environment under 'bash -el {0}'.
+name: Set up PartCAD
+description: Install PartCAD from a commit of its repository or a PyPI release
+
+inputs:
+  python-version:
+    description: Python to run PartCAD on
+    required: true
+  partcad-ref:
+    description: >
+      A commit of partcad/partcad to install, from a checkout at
+      'partcad-src/' that sandboxes install PartCAD from as well. Empty for
+      'partcad-version'.
+    default: ""
+  partcad-version:
+    description: A PyPI release of PartCAD to install. Empty for 'partcad-ref'.
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    - name: Enable long paths (Windows)
+      if: runner.os == 'Windows'
+      shell: powershell
+      run: |
+        reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem" /v LongPathsEnabled /t REG_DWORD /d 1 /f
+
+    # PartCAD's wheel build refuses a checkout whose symlinks Git for Windows
+    # left as text files. Set before the checkout below, which copies the
+    # global configuration.
+    - name: Configure Git
+      shell: bash
+      run: git config --global core.symlinks true
+
+    - name: Check out PartCAD
+      if: inputs.partcad-ref != ''
+      uses: actions/checkout@v7
+      with:
+        repository: partcad/partcad
+        ref: ${{ inputs.partcad-ref }}
+        path: partcad-src
+        persist-credentials: false
+
+    - uses: conda-incubator/setup-miniconda@v4
+      with:
+        miniforge-version: 26.3.2-3
+        # conda-forge only, as in PartCAD's CI: mixing in Anaconda's
+        # 'defaults' picks ABI-incompatible builds.
+        channels: conda-forge
+        python-version: ${{ inputs.python-version }}
+        activate-environment: partcad
+        auto-activate-base: false
+
+    - name: Install OpenSCAD (Linux)
+      if: runner.os == 'Linux'
+      shell: bash
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y openscad
+
+    - name: Install OpenSCAD (macOS)
+      if: runner.os == 'macOS'
+      shell: bash
+      run: |
+        # The "openscad" cask is disabled; the snapshot one is what PartCAD
+        # uses. It does not necessarily put a binary on PATH.
+        if ! command -v openscad >/dev/null 2>&1; then
+          HOMEBREW_NO_AUTO_UPDATE=1 brew install --cask openscad@snapshot
+        fi
+        if ! command -v openscad >/dev/null 2>&1; then
+          binary="$(find /Applications -maxdepth 4 -path '*/Contents/MacOS/*' \
+            -type f -perm -111 -iname 'openscad' 2>/dev/null | head -n 1)"
+          if [ -z "${binary}" ]; then
+            echo "::error::openscad@snapshot installed but no OpenSCAD executable was found under /Applications"
+            exit 1
+          fi
+          mkdir -p "${HOME}/.local/bin"
+          ln -sf "${binary}" "${HOME}/.local/bin/openscad"
+          echo "${HOME}/.local/bin" >> "${GITHUB_PATH}"
+          export PATH="${HOME}/.local/bin:${PATH}"
+        fi
+        openscad --version
+
+    - name: Install OpenSCAD (Windows)
+      if: runner.os == 'Windows'
+      shell: powershell
+      working-directory: ${{ runner.temp }}
+      run: |
+        curl.exe -fsSL -o openscad.zip https://files.openscad.org/OpenSCAD-2021.01-x86-64.zip
+        curl.exe -fsSL -o openscad.zip.sha256 https://files.openscad.org/OpenSCAD-2021.01-x86-64.zip.sha256
+        $expected = ((Get-Content openscad.zip.sha256) -split '\s+')[0]
+        $actual = (Get-FileHash -Algorithm SHA256 openscad.zip).Hash
+        if ($expected -ne $actual) {
+          Write-Error "SHA256 checksum verification failed"
+          exit 1
+        }
+        Expand-Archive -Force openscad.zip -DestinationPath openscad
+        Add-Content $env:GITHUB_PATH "$env:RUNNER_TEMP\openscad\openscad-2021.01"
+
+    - name: Install PartCAD
+      shell: bash -el {0}
+      env:
+        PARTCAD_REF: ${{ inputs.partcad-ref }}
+        PARTCAD_VERSION: ${{ inputs.partcad-version }}
+      run: |
+        python -m pip install --upgrade pip
+        if [ -n "${PARTCAD_REF}" ]; then
+          python -m pip install ./partcad-src
+          # What a sandbox installs when a package's own Python asks for
+          # 'partcad' (openvmp's parts do 'import partcad'): this checkout, as
+          # in PartCAD's own //pub job, rather than whatever PyPI has.
+          echo "PC_PARTCAD_PACKAGE_SUB=${GITHUB_WORKSPACE}/partcad-src" >> "${GITHUB_ENV}"
+        elif [ -n "${PARTCAD_VERSION}" ]; then
+          python -m pip install "partcad==${PARTCAD_VERSION}"
+        else
+          echo "::error::Neither 'partcad-ref' nor 'partcad-version' was given"
+          exit 1
+        fi
+        pc --no-ansi version
+        pc --no-ansi healthcheck --fix

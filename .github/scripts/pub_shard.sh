@@ -42,6 +42,17 @@ for package in ${PACKAGES}; do
 done
 
 if [ "${#failed[@]}" -ne 0 ]; then
+  # Why, from the PartCAD service's own log: the command line prints only the
+  # message of an error the service raised, while the service logs it with its
+  # traceback. Every record that starts at ERROR or above, with the lines that
+  # continue it.
+  for log in "${HOME}"/.partcad/workspaces/*/partcad.log; do
+    [ -f "${log}" ] || continue
+    echo "::group::Errors the PartCAD service logged (${log})"
+    awk '/^[0-9]{4}-[0-9]{2}-[0-9]{2} / { keep = ($3 == "ERROR" || $3 == "CRITICAL") } keep' "${log}" |
+      cut -c1-500 | tail -n 400
+    echo "::endgroup::"
+  done
   echo "${#failed[@]} package(s) failed:"
   printf '  %s\n' "${failed[@]}"
   exit 1

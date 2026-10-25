@@ -3,14 +3,20 @@
 # "main.yml" (pushes, the latest PartCAD on PyPI).
 #
 #   Plan    pins the PartCAD every job below installs, lists the packages of
-#           //pub with it, and splits that list into contiguous ranges.
-#   Shards  one job per range, operating system and Python: 'pc test' and
-#           'pc render' with '--fast-only' on each package of the range.
+#           //pub with it, and splits that list into shards: LDraw in a shard
+#           of its own, everything else in contiguous ranges balanced by how
+#           long each package took (".github/scripts/pub_weights.json").
+#   Shards  one job per shard, operating system and Python: 'pc test' and
+#           'pc render' with '--fast-only' on each package of the shard.
 #   Result  the one check to require in branch protection.
 #
-# The operating systems and Pythons are the matrix PartCAD's own CI runs
+# The operating systems and Pythons default to the matrix PartCAD's own CI runs
 # "Repo //pub" on at its "deep" level: OSES_SLIM x PYTHONS_SANDBOX in
 # partcad/partcad's ".github/workflows/test.yml". Keep the two in step.
+#
+# LDraw (//pub/universe/lego/ldraw, some twenty thousand parts) is a shard of
+# its own because nothing else would fit beside it: at the rate it is tested
+# today it does not fit in one job either, and is being made faster.
 name: Test //pub
 
 on:
@@ -21,15 +27,18 @@ on:
         type: string
         required: true
       shards:
-        description: How many ranges to split the packages of //pub into
+        description: How many ranges to split the packages of //pub into, besides LDraw's own shard
         type: number
-        default: 8
+        default: 6
+      oses:
+        description: JSON list of the runner images to test on
+        type: string
+        default: '["ubuntu-latest", "windows-latest", "macos-latest"]'
 
 permissions:
   contents: read
 
 env:
-  OSES: '["ubuntu-latest", "windows-latest", "macos-latest"]'
   PYTHONS: '["3.11", "3.14"]'
   PC_TELEMETRY_ENV: test
   PC_TELEMETRY_PERFORMANCE: false
@@ -96,21 +105,23 @@ jobs:
         env:
           COLUMNS: "500"
           SHARDS: ${{ inputs.shards }}
+          OSES: ${{ inputs.oses }}
         run: |
           set +e
           pc --no-ansi list packages -r >../packages.log 2>&1
           list_rc=$?
           set -e
           cat ../packages.log
-          python -I .github/scripts/pub_shards.py --shards "${SHARDS}" --os "${OSES}" --python "${PYTHONS}" \
-            <../packages.log >>"${GITHUB_OUTPUT}"
+          python -I .github/scripts/pub_shards.py --shards "${SHARDS}" \
+            --own-shard //pub/universe/lego/ldraw --weights .github/scripts/pub_weights.json \
+            --os "${OSES}" --python "${PYTHONS}" <../packages.log >>"${GITHUB_OUTPUT}"
           if [ "${list_rc}" -ne 0 ]; then
             echo "::error title=pc list packages::exited ${list_rc}: the packages it could not load are not tested by any shard"
             exit "${list_rc}"
           fi
 
   shard:
-    name: ${{ matrix.os }}, Python ${{ matrix.python-version }}, shard ${{ matrix.shard.n }}/${{ matrix.shard.of }}
+    name: ${{ matrix.os }}, Python ${{ matrix.python-version }}, shard ${{ matrix.shard.label }}
     needs: plan
     if: ${{ !cancelled() && needs.plan.outputs.matrix != '' }}
     strategy:

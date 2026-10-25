@@ -23,3 +23,5 @@ jobs:
     uses: ./.github/workflows/pub.yml
     with:
       partcad: devel
+      # Linux only on a pull request; every push to 'main' runs all three.
+      oses: '["ubuntu-latest"]'

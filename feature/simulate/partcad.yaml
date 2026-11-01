@@ -4,12 +4,12 @@ dependencies:
     type: git
     url: https://github.com/partcad/partcad-sim-gazebo
     track: main
-    revision: e236bd601108c66a2e5993eddf3536f478f4af43
+    revision: b7b864a48201768fa91bc92e295f07f15e0d3826
     web: https://gazebosim.org/
   mujoco:
     desc: Reading, writing, opening and simulating a MuJoCo model, in MJCF.
     type: git
     url: https://github.com/partcad/partcad-sim-mujoco
     track: main
-    revision: 2cfa4c4dcfd00fda22924c817c67b673f1a7b342
+    revision: dc99e9213801b957e0298604edfa3065f969daf8
     web: https://mujoco.org/

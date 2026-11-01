@@ -1,0 +1,28 @@
+# Colours anybody may name, whatever they make.
+#
+# Not a colour standard: no colour system ships in the index, for licensing
+# reasons, and a vendor declares its own colours in its own package, under the
+# names it sells them by (see "CMF" in the PartCAD documentation). What is here
+# is what every package needs and none of them owns.
+partcad: ">=0.8.274"
+
+desc: |
+  Colours for drawing with. 'rgba' is any colour, written as its value
+  ('//pub/std/color:rgba;color=C91A09FF'): a picture of how something looks,
+  not a claim that it can be had in that colour. A part coloured with it is
+  drawn in it and is not manufacturable until a colour that can be had is
+  named instead.
+
+colors:
+  rgba:
+    desc: >-
+      Any colour, as its sRGB value and alpha in hexadecimal ('RRGGBBAA'). For
+      drawing only: it claims nothing about what can be sourced or made, and so
+      it does not count as a colour for manufacturing.
+    parameters:
+      color:
+        type: string
+        default: DAA520FF
+        desc: The colour as 'RRGGBBAA' (or 'RRGGBB').
+    display: "#%color%"
+    manufacturable: false

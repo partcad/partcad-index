@@ -4,6 +4,6 @@ dependencies:
     type: git
     url: https://github.com/partcad/partcad-render-draftwright
     track: main
-    revision: cf5629476d3e1d1ad19b5ba1961cef7cd00fed1c
+    revision: fd9e5c8f7baa68eb8d3258ca9e4ab48f7b59bd22
     web: https://github.com/pzfreo/draftwright
     poc: pzfreo@gmail.com

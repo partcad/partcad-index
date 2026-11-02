@@ -4,7 +4,7 @@
 # reasons, and a vendor declares its own colours in its own package, under the
 # names it sells them by (see "CMF" in the PartCAD documentation). What is here
 # is what every package needs and none of them owns.
-partcad: ">=0.8.274"
+partcad: ">=0.8.276"
 
 desc: |
   Colours for drawing with. 'rgba' is any colour, written as its value

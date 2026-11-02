@@ -9,9 +9,9 @@ partcad: ">=0.8.276"
 desc: |
   Colours for drawing with. 'rgba' is any colour, written as its value
   ('//pub/std/color:rgba;color=C91A09FF'): a picture of how something looks,
-  not a claim that it can be had in that colour. A part coloured with it is
-  drawn in it and is not manufacturable until a colour that can be had is
-  named instead.
+  not a claim that it can be had in that colour. It declares
+  'manufacturable: false': a part coloured with it is not specified for
+  manufacturing until a colour that can be had is named instead.
 
 colors:
   rgba:

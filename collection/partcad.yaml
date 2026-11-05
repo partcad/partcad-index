@@ -1,0 +1,53 @@
+desc: |
+  Collections of models other people have published on model sites, each served
+  as PartCAD parts by a repository plugin: nothing is listed and no geometry is
+  vendored. A part is asked for by the site's own number or slug for a model,
+  found with 'pc search parts', and fetched from the site when it is first built.
+  An upload to a model site says nothing about whether, or how, it is made to be
+  manufactured, so none of these packages is manufacturable.
+
+# Each package below is one model site. Its parts are the models of its
+# external dependency 'models', //pub/collection/<site>/models:<model id>, and
+# its repository plugin is //pub/collection/<site>:<site>_repo - the name that
+# 'pc login' and the 'parameters' of ~/.partcad/config.yaml use, by its place
+# here. Every one of them needs PartCAD 0.9.4 or newer: the first release whose
+# repository plugins search their own catalog ('searchKinds'), resolve a
+# parametrized name themselves ('instanceKinds') and answer 'pc login'.
+dependencies:
+  # Free models need no account at all, paid ones their buyer's 'pc login'.
+  printables:
+    desc: Models on Printables, a part per file, by the model's number.
+    type: git
+    url: https://github.com/partcad/partcad-repo-printables
+    track: main
+    revision: 3f7418170b9dd75b313f340a5cd3038bc134911d
+  # A model's details and each print profile's preview mesh need no account;
+  # the files the designer uploaded take a MakerWorld (Bambu Lab) sign-in.
+  makerworld:
+    desc: Models on MakerWorld, a part per file, by the model's number.
+    type: git
+    url: https://github.com/partcad/partcad-repo-makerworld
+    track: main
+    revision: a9b3b2986dde3665edc2049650243de63fe83af9
+  # Details and search need no account; downloading takes a GrabCAD sign-in.
+  grabcad:
+    desc: Models in the GrabCAD Library, a part per file, by the model's slug.
+    type: git
+    url: https://github.com/partcad/partcad-repo-grabcad
+    track: main
+    revision: 930c53bf69cff110d8adc72780648666f42280d0
+  # Everything takes a Thingiverse app token.
+  thingiverse:
+    desc: Things on Thingiverse, a part per file, by the thing's number.
+    type: git
+    url: https://github.com/partcad/partcad-repo-thingiverse
+    track: main
+    revision: 28ca1b7718bd844b6610d51fe50f87c8e8add37c
+  # Everything takes a Cults3D API key, and a creation's files are given to
+  # its creator only.
+  cults3d:
+    desc: Creations on Cults3D, by the creation's slug.
+    type: git
+    url: https://github.com/partcad/partcad-repo-cults3d
+    track: main
+    revision: aa10576ca7f3450cb231a720de10f0ed5c20dcfd

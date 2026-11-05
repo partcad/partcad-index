@@ -9,9 +9,12 @@ dependencies:
   # stores LEGO parts are bought at are registered with the other stores, at
   # //pub/svc/commerce: LEGO's Pick a Brick (lego-pick-a-brick) and BrickLink
   # (bricklink).
+  #
+  # Tracks partcad-0.8.280: LEGO's colours, materials and finishes need that
+  # PartCAD at least, and the branch tracked before, main, promised 0.8.174.
   lego:
     desc: LEGO parts from the LDraw library, as parametric PartCAD parts
     type: git
     url: https://github.com/partcad/partcad-ldraw/
-    track: main
+    track: partcad-0.8.280
     revision: 63d9ccebe1a00fad42dc75f974ce5fb9a5e8333a

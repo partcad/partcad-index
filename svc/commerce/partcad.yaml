@@ -31,3 +31,13 @@ dependencies:
     url: https://github.com/partcad/svc-commerce-bricklink
     track: main
     revision: 99010beddfd02fa98ad179bc86c315f1afb033d9
+  # IKEA: quotes IKEA articles - a part declared with 'vendor: ikea' and an
+  # IKEA article number as its SKU - at the IKEA store nearest the user, and
+  # serves IKEA's products, by IKEA's own categories, as aliases of models in
+  # //pub/collection.
+  ikea:
+    desc: IKEA, quoted at the store nearest you; and its products, by IKEA's categories.
+    type: git
+    url: https://github.com/partcad/partcad-svc-commerce-ikea
+    track: master
+    revision: bdae15fe115c3d45d38fa8bc27e8fd57061c8538

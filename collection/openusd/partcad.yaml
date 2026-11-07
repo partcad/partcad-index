@@ -38,7 +38,7 @@ dependencies:
     type: git
     url: https://github.com/partcad/partcad-collection-openusd-nvidia
     track: main
-    revision: b337181afa9be0e5feb49236e43bd570f1c74e5e
+    revision: fc2c575c5dbfadee614b3efea16de8792ee55e10
   aswf-dpel:
     desc: "The ASWF Digital Production Example Library's USD: ALab and its entities, 4004 Moore Lane"
     type: git

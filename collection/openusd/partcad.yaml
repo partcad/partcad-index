@@ -3,8 +3,11 @@ desc: |
   page (https://openusd.org/release/dl_downloads.html) lists, each served by a
   repository plugin as parts of PartCAD's own 'usd' part type. Unlike a model
   site's, these are listed: listing and searching them download no asset, and
-  a part is fetched when it is first built. Nothing is vendored, each part
-  carries its asset's own licence, and none is manufacturable.
+  a part is fetched when it is first built. No geometry is vendored: the one
+  piece of an asset any package carries is disney-moana's seek index, which
+  holds 67 32 KB pieces of the Moana Island Scene's USD layers under Disney's
+  licence, kept verbatim beside it (research and software development only).
+  Each part carries its asset's own licence, and none is manufacturable.
 
 # Each package below is one library. Its parts are those of its external
 # dependency 'assets', a child package per set of assets where it has several:

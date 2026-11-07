@@ -50,4 +50,4 @@ dependencies:
     type: git
     url: https://github.com/partcad/partcad-collection-openusd-disney-moana
     track: main
-    revision: 9fbf0243998abb05732a801890e29d532f79636c
+    revision: e4bf61a6f8ec931834d45f499039032db5b73145

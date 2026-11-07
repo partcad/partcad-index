@@ -20,19 +20,19 @@ dependencies:
     type: git
     url: https://github.com/partcad/partcad-collection-openusd-pixar
     track: main
-    revision: 8d63348734daae320ffe3ad815715c0921606f85
+    revision: a18df25e9ded32782c68b037916faaa4b70c62f8
   usd-wg:
     desc: "The USD Working Group's sample and test assets (github.com/usd-wg/assets)"
     type: git
     url: https://github.com/partcad/partcad-collection-openusd-usd-wg
     track: main
-    revision: 92fbd6ef8e35e7e3694ed17a884e5fca5abdd96a
+    revision: 9252b93e2db700ca385897f40cfd4d333e2d7f46
   apple:
     desc: "Apple's AR Quick Look gallery: its USDZ models"
     type: git
     url: https://github.com/partcad/partcad-collection-openusd-apple
     track: main
-    revision: 1ba9cf6ffffa4893e804bc59ea2469af2c4497db
+    revision: 759e4e07ddff6db20527cc09a0a2b4128275717e
   nvidia:
     desc: "NVIDIA's Omniverse sample content: ArchVis and SimReady props, the Marbles assets, sample scenes"
     type: git
@@ -44,10 +44,10 @@ dependencies:
     type: git
     url: https://github.com/partcad/partcad-collection-openusd-aswf-dpel
     track: main
-    revision: 8569294661a7fced65a67e5e3e104b35b9d55a8d
+    revision: 3ea4feb56eb716408606be6dc178e04efe4260ea
   disney-moana:
     desc: "Walt Disney Animation Studios' Moana Island Scene, by element"
     type: git
     url: https://github.com/partcad/partcad-collection-openusd-disney-moana
     track: main
-    revision: 180887ebfdf8bc2e734ab1f52634a77663141ca2
+    revision: 9fbf0243998abb05732a801890e29d532f79636c

@@ -7,8 +7,9 @@ change to all of them, and these rules exist so that it is never a surprise.
 ## The rules
 
 1. **Every pull request merges to `devel`.** Nothing merges to `main`.
-2. **`main` only moves by fast-forward from `devel`.** That fast-forward is the release of the index (see
-   [Releasing the index](#releasing-the-index)).
+2. **`main` only moves by fast-forward from `devel`.** That fast-forward is the release of the index, and it
+   comes *after* the PartCAD release it needs is on PyPI -- not merely after PartCAD's `main` points at that
+   version (see [Releasing the index](#releasing-the-index)).
 3. **The index always pins an exact revision.** Every `git` dependency that follows a branch names a commit id
    in `revision:`, under the `track:` of that branch:
 
@@ -94,7 +95,8 @@ Such a change does not go to the tracked branch. Instead:
    tracked: older commits of the index pin its commits, packages pin those commits of the index, and every one
    of them has to stay fetchable.
 4. **Mind which PartCAD has what you need.** The index's `main` may pin a package only once the PartCAD it
-   requires is released (PartCAD's `main`, which is what PyPI has): `main` is what an installed PartCAD
+   requires is **on PyPI**, which is later than PartCAD's `main` pointing at it -- moving PartCAD's `main` only
+   starts its release run (see [Releasing the index](#releasing-the-index)): `main` is what an installed PartCAD
    reads. The index's `devel` may pin it as soon as that PartCAD is on PartCAD's `devel`: a PartCAD running
    from its sources reads the index's `devel`, which is how a package and the PartCAD feature it needs are
    developed together. Such a pull request can merge to `devel`; `main` waits for the release.
@@ -118,7 +120,22 @@ For the maintainers of this repository:
    `PC_DEVEL_INDEX=true`) makes any command in a package that imports the index use its `devel` instead of its
    `main`, wherever it appears in the dependency tree. A PartCAD running from its sources (`pip install -e`,
    `poetry install`) does that by default.
-3. **Fast-forward `main`** to the tested commit of `devel`:
+3. **Wait for the PartCAD release this needs to be on PyPI.** Not for PartCAD's `main` to point at it -- that
+   push only *starts* PartCAD's `Deployment` run, which builds the standalone bundles, the IDE, the `.vsix` and
+   the plugin before `Publish to PyPI` uploads anything, and on `main` that job waits for a maintainer to
+   approve its `pypi` environment. So PartCAD's `main` can be at a version that is not installable yet, or that
+   never becomes installable if the run fails or is never approved. Check PyPI itself:
+
+   ```shell
+   pip index versions partcad
+   ```
+
+   This matters because `main` is what an *installed* PartCAD reads, and what every package created by
+   `pc init` tracks. Releasing the index ahead of the upload hands all of them, on their next `pc update`, pins
+   whose `partcad:` floor is above the newest release on PyPI -- they fail with `Incompatible PartCAD version!`
+   until the upload lands, or for good if it never does, and the only way back is another release of the index
+   moving the pins down again. Nothing enforces the order mechanically; it is a rule the maintainers keep.
+4. **Fast-forward `main`** to the tested commit of `devel`:
 
    ```shell
    git fetch origin

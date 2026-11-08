@@ -1,10 +1,12 @@
 desc: |
-  Collections of models other people have published on model sites, each served
-  as PartCAD parts by a repository plugin: nothing is listed and no geometry is
-  vendored. A part is asked for by the site's own number or slug for a model,
-  found with 'pc search parts', and fetched from the site when it is first built.
-  An upload to a model site says nothing about whether, or how, it is made to be
-  manufactured, so none of these packages is manufacturable.
+  Collections of models other people have published, each served as PartCAD
+  parts by a repository plugin, with no geometry vendored. On a model site
+  nothing is listed: a part is asked for by the site's own number or slug for a
+  model, found with 'pc search parts', and fetched from the site when it is
+  first built. The OpenUSD asset libraries, in 'openusd', are listed as well. An
+  upload to a model site says nothing about whether, or how, it is made to be
+  manufactured, and a USD asset is made to be looked at, so none of these
+  packages is manufacturable.
 
 # Each package below is one model site. Its parts are the models of its
 # external dependency 'models', //pub/collection/<site>/models:<model id>, and

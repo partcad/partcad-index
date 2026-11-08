@@ -1,0 +1,56 @@
+desc: |
+  OpenUSD assets as PartCAD parts: the asset libraries openusd.org's Downloads
+  page (https://openusd.org/release/dl_downloads.html) lists, each served by a
+  repository plugin as parts of PartCAD's own 'usd' part type. Unlike a model
+  site's, these are listed: listing and searching them download no asset, and
+  a part is fetched when it is first built. No geometry is vendored: the one
+  piece of an asset any package carries is disney-moana's seek index, which
+  holds 67 32 KB pieces of the Moana Island Scene's USD layers under Disney's
+  licence, kept verbatim beside it (research and software development only).
+  Each part carries its asset's own licence, and none is manufacturable.
+
+# Each package below is one library. Its parts are those of its external
+# dependency 'assets', a child package per set of assets where it has several:
+# //pub/collection/openusd/pixar/assets/kitchen-set:Bowl. Its repository
+# plugin is //pub/collection/openusd/<library>:<plugin>, as its README says
+# (pixar_repo, moana_repo, ...) - the name the 'parameters' of
+# ~/.partcad/config.yaml use, by its place here. Every one of them needs
+# PartCAD 0.9.11 or newer: the first release whose //builtin has the 'usd'
+# part type.
+dependencies:
+  pixar:
+    desc: "Pixar's OpenUSD sample assets: the Kitchen Set and its props, the City Set, the UsdSkel examples"
+    type: git
+    url: https://github.com/partcad/partcad-collection-openusd-pixar
+    track: main
+    revision: a18df25e9ded32782c68b037916faaa4b70c62f8
+  usd-wg:
+    desc: "The USD Working Group's sample and test assets (github.com/usd-wg/assets)"
+    type: git
+    url: https://github.com/partcad/partcad-collection-openusd-usd-wg
+    track: main
+    revision: 9252b93e2db700ca385897f40cfd4d333e2d7f46
+  apple:
+    desc: "Apple's AR Quick Look gallery: its USDZ models"
+    type: git
+    url: https://github.com/partcad/partcad-collection-openusd-apple
+    track: main
+    revision: 759e4e07ddff6db20527cc09a0a2b4128275717e
+  nvidia:
+    desc: "NVIDIA's Omniverse sample content: ArchVis and SimReady props, the Marbles assets, sample scenes"
+    type: git
+    url: https://github.com/partcad/partcad-collection-openusd-nvidia
+    track: main
+    revision: fc2c575c5dbfadee614b3efea16de8792ee55e10
+  aswf-dpel:
+    desc: "The ASWF Digital Production Example Library's USD: ALab and its entities, 4004 Moore Lane"
+    type: git
+    url: https://github.com/partcad/partcad-collection-openusd-aswf-dpel
+    track: main
+    revision: 3ea4feb56eb716408606be6dc178e04efe4260ea
+  disney-moana:
+    desc: "Walt Disney Animation Studios' Moana Island Scene, by element"
+    type: git
+    url: https://github.com/partcad/partcad-collection-openusd-disney-moana
+    track: main
+    revision: e4bf61a6f8ec931834d45f499039032db5b73145

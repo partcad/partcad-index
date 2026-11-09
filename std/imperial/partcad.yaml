@@ -11,4 +11,4 @@ dependencies:
     type: git
     url: https://github.com/partcad/partcad-standard-imperial-dimensional-lumber/
     track: main
-    revision: 78b6bc7bbaebed026b52912873cb6f733cf9f787
+    revision: c38ad98094cb7d32c395d9623c2542ee702e20e3

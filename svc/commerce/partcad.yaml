@@ -10,13 +10,13 @@ dependencies:
     type: git
     url: https://github.com/partcad/svc-commerce-homedepot
     track: main
-    revision: 45f80c1fbb3131ef1e604e2f8a309a2dddc96dc8
+    revision: e73c297931f89ab43ba939686d52f1153f46ac49
   lowes:
     desc: Lowe's online store.
     type: git
     url: https://github.com/partcad/svc-commerce-lowes
     track: main
-    revision: a41b3cbbd5fcc47979ea0271c0a3f4f157f61c1e
+    revision: e22a738063585bd35b4bc4a867c3dc46522a65dd
   # The LEGO stores. Each quotes a part declared with 'vendor: lego' and its
   # LDraw number as its SKU, the number //pub/universe/lego names it by.
   lego-pick-a-brick:

@@ -9,3 +9,9 @@ dependencies:
     url: https://github.com/partcad/partcad
     revision: 0.8.233
     relPath: examples
+  lego:
+    desc: "LEGO models built from the LDraw parts library: a castle and a Technic Formula 1 car"
+    type: git
+    url: https://github.com/partcad/partcad-ldraw-examples
+    track: main
+    revision: efe35c1a1a4cd0df6df96d5402ca4ace689cd19b

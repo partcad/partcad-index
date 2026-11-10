@@ -4,5 +4,5 @@ dependencies:
     type: git
     url: https://github.com/partcad/partcad-furniture-basic
     track: main
-    revision: a4afc1e54191a1337e7cea753ed167b95934ce81
+    revision: cae4655774970d364b3e6c71858683e518399ca6
     relPath: workspace

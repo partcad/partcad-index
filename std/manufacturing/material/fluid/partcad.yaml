@@ -37,6 +37,12 @@ desc: Standard fluids - air, fresh water and seawater - as PartCAD materials.
 #   properties for fresh water and seawater, which are what towing tanks and
 #   ship-model tests are corrected to. A fluid at another temperature is another
 #   material; a package that needs warm water catalogues its own and names it.
+# 'thermalConductivity' (W/(m*K)) is each fluid's at the temperature above,
+# from the source named beside it, and is stated only where that source is
+# exact enough to say: seawater's is not stated, because the correlations for it
+# disagree in the third digit around a value no lower than pure water's. No
+# fluid-dynamics implementation in the index takes a conductivity yet; a PartCAD
+# older than the one that reads the key lints it as unknown and ignores it.
 materials:
   air:
     formal: Air
@@ -50,6 +56,7 @@ materials:
       this; name it when the drag matters.
     url: https://en.wikipedia.org/wiki/International_Standard_Atmosphere
     density: 1.225 # kg/m^3
+    thermalConductivity: 0.02534 # W/(m*K), air; ICAO standard atmosphere, sea level, 15 C, 101.325 kPa. https://en.wikipedia.org/wiki/International_Standard_Atmosphere
     viscosity: 1.7894e-5 # Pa*s
     tags:
       - fluid
@@ -67,6 +74,7 @@ materials:
       other.
     url: https://www.ittc.info/media/11764/75-02-01-03.pdf
     density: 999.1 # kg/m^3
+    thermalConductivity: 0.5888 # W/(m*K), water; pure liquid water, 15 C (288.15 K), 0.1 MPa. IAPWS SR6-08(2011), Revised Supplementary Release on Properties of Liquid Water at 0.1 MPa, Eq. (8) and Table 6 (consistent with the IAPWS 2011 thermal conductivity formulation); https://iapws.org/documents/release/LiquidWater.download
     viscosity: 0.001138 # Pa*s
     tags:
       - fluid

@@ -17,4 +17,4 @@ dependencies:
     type: git
     url: https://github.com/partcad/partcad-ldraw/
     track: partcad-0.8.280
-    revision: 63d9ccebe1a00fad42dc75f974ce5fb9a5e8333a
+    revision: 77ecf0c98987a29ff61d0ac68ad695f225e82e0c

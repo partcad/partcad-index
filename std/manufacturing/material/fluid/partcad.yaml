@@ -41,8 +41,9 @@ desc: Standard fluids - air, fresh water and seawater - as PartCAD materials.
 # from the source named beside it, and is stated only where that source is
 # exact enough to say: seawater's is not stated, because the correlations for it
 # disagree in the third digit around a value no lower than pure water's. No
-# fluid-dynamics implementation in the index takes a conductivity yet; a PartCAD
-# older than the one that reads the key lints it as unknown and ignores it.
+# fluid-dynamics implementation in the index takes a conductivity yet. PartCAD
+# 0.10.17 and later read the key; an older one ignores it, and only its
+# 'pc lint' reports it as unknown.
 materials:
   air:
     formal: Air

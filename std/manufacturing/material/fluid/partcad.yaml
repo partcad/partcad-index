@@ -15,12 +15,12 @@ name: //pub/std/manufacturing/material/fluid
 # Every value is also computed, from the fluid's temperature, an air's pressure
 # and a seawater's salinity, with the expression functions 'interpolate' and
 # 'lerp' and with bounds ('min', 'max') on those parameters. PartCAD has them
-# from 0.10.21, the first release with partcad/partcad's parametric-materials
+# from 0.10.23, the first release with partcad/partcad's parametric-materials
 # change. An older one cannot evaluate those functions - it would leave the
 # densities and viscosities of water and seawater standing as the text of
 # their expressions, where a number belongs - and it would not hold a
 # parameter to its range, so it is refused here as well.
-partcad: ">=0.10.21"
+partcad: ">=0.10.23"
 
 desc: Standard fluids - air, fresh water and seawater - as PartCAD materials.
 

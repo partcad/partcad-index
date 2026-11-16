@@ -25,4 +25,4 @@ dependencies:
     type: git
     url: https://github.com/partcad/partcad-examples-csgrs
     track: main
-    revision: 40e85a2c56988e6ebce12a0f1c102ebbf6ad27e7
+    revision: 1204e89127375134006bc3b06b86a4e8392c4831

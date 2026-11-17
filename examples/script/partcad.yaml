@@ -20,3 +20,9 @@ dependencies:
     url: https://github.com/openvmp/build123d
     track: partcad-examples-update-2
     revision: 6e7f5b631b027560d619dd61ffdcb23639a4cd36
+  csgrs:
+    desc: Examples of the csgrs plugin -- gears, lattices, airfoils, text, traced images, VRML models, CSG trees, sketches, PCB checks and containers
+    type: git
+    url: https://github.com/partcad/partcad-examples-csgrs
+    track: main
+    revision: 1204e89127375134006bc3b06b86a4e8392c4831

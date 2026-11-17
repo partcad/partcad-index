@@ -13,3 +13,10 @@ dependencies:
     track: main
     revision: 42162b0027a26fc8c5b6288782f47193ba08ecb0
     web: https://github.com/bherbruck/solidcraft
+  csgrs:
+    desc: Gears, racks, TPMS lattices, NACA airfoils, single-stroke and TrueType text, traced images, VRML models and CSG trees built by the csgrs kernel -- as parts, and as sketches -- and hyperdrc's PCB design-readiness checks as a qualification test.
+    type: git
+    url: https://github.com/partcad/partcad-csgrs
+    track: main
+    revision: 9462c7ea8bf3aa6af9c182306816e727a1af9839
+    web: https://github.com/timschmidt/csgrs
